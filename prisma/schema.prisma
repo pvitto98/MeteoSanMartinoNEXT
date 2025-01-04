@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+    binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model WeatherData {
+  id                Int      @id @default(autoincrement())
+  date              String   @unique // Ensure the date is unique
+  day               Int
+  month             Int
+  year              Int
+  tempHigh          Float
+  tempLow           Float
+  tempAvg           Float
+  windspeedHigh     Float
+  windspeedLow      Float
+  windspeedAvg      Float
+  windgustHigh      Float
+  windgustLow       Float
+  windgustAvg       Float
+  dewptHigh         Float
+  dewptLow          Float
+  dewptAvg          Float
+  windchillHigh     Float
+  windchillLow      Float
+  windchillAvg      Float
+  heatindexHigh     Float
+  heatindexLow      Float
+  heatindexAvg      Float
+  pressureMax       Float
+  pressureMin       Float
+  pressureTrend     Float
+  precipRate        Float
+  precipTotal       Float
+  timestamp         Int      // This is optional but can be used to store raw timestamp values
+  solarRadiationHigh Float
+  uvHigh            Float
+  winddirAvg        Float
+  humidityHigh      Float
+  humidityLow       Float
+  humidityAvg       Float
+  lightningCount    Int
+  pm25Avg           Float
+  pm25Max           Float
+  pm25Min           Float
+
+  @@index([date]) // Optional: index for faster lookups
+}

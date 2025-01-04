@@ -1,0 +1,100 @@
+.windCircleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background-color: #3d3e47;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: var(--br-6xl);
+    padding: 20px;
+  }
+  
+  .windCircle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .arrow {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transform-origin: 50% 50%;
+  }
+  
+  .windDirectionValue {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  /* WindDirection.module.css */
+.windContainer {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-lg);
+    gap: var(--gap-mid);
+    background-color: #ADD8E6; /* Azzurro pastello */
+    border-radius: var(--br-6xl);
+  }
+
+  .windSpeedContainer{
+    font-family: var(--font-helvetica-rounded);
+    text-align: center;
+    color: white;
+  }
+  
+  .windCircle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #3d3e47; /* Azzurro pastello */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .windArrow {
+    width: 30px;
+    height: 30px;
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .windDirectionValue {
+    position: absolute;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  
+  .windSpeedWrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between the circle and the text */
+  }
+
+  
+  .windSpeedLabel {
+    font-size: var(--font-size-base);
+    color: #FFFFFF;
+  }
+  
+  .windSpeedValue {
+    font-family: var(--font-helvetica-rounded);
+    font-size: var(--font-size-21xl);
+    color: #FFFFFF;
+  }
+
+
+  

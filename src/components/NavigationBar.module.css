@@ -1,0 +1,139 @@
+.logo img {
+  transition: filter 0.3s ease;
+}
+
+.logo img.clicked {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); /* Shadow follows the SVG shape */
+}
+.aboutMe,
+.projects {
+  position: relative;
+  letter-spacing: -0.02em;
+  line-height: 80%;
+  padding: 20px 0px;
+  margin: 0px 20px;
+  display: inline-block;
+  opacity: 0.75;
+}
+.aboutMe:hover, .projects:hover {
+  opacity: 1;
+}
+
+.aboutMe::before, .projects::before {
+  transition: 300ms;
+  height: 3px;
+  content: "";
+  position: absolute;
+  background-color: currentColor; /* Use current text color */
+  width: 0%;
+  bottom: 10px; /* Adjust the position if necessary */
+}
+
+.aboutMe:hover::before, .projects:hover::before {
+  width: 100%;
+}
+.logo{
+  color: inherit;  /* Keep the text color the same */
+  text-decoration: none;  /* Remove the underline */
+}
+/* .logo {
+  transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+
+} */
+
+/* .clicked {
+  transform: rotateY(10deg) translateZ(20px) scale(1.05);
+  border-color: #F26165;
+  color: #F26165;
+  background-color: #EEEEEE;
+} */
+
+.projects {
+  color: var(--color-white);
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  font-weight: 800;
+}
+.vectorIcon {
+  position: absolute;
+  height: 50%;
+  width: 75%;
+  top: 25%;
+  right: 12.4%;
+  bottom: 25%;
+  left: 12.6%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.icsharpMenu {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  height: 50px;
+  width: 50px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: none;
+}
+.navigation,
+.navigationbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.navigation {
+  justify-content: center;
+  gap: 30px;
+  font-size: 18px;
+
+}
+.navigationbar {
+  top:0;
+  width: 100vw;
+  max-width: 100%;
+  overflow: hidden;
+  justify-content: space-between;
+  padding: 20px 100px var(--padding-xl) var(--padding-56xl);
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 16px;
+  color: var(--color-whitesmoke);
+  font-family: var(--font-bricolage-grotesque);
+  z-index: 5;
+}
+
+.logoStyle{
+  height: 100px;
+}
+
+.aboutMe,.projects{
+    text-decoration: none;
+    color: inherit; /* Keeps the text color the same */
+
+}
+@media screen and (max-width: 960px) {
+  .links {
+    display: none;
+  }
+  .icsharpMenu {
+    display: flex;
+  }
+  .navigationbar{
+    padding: 25px 25px 20px 25px;
+    font-size: 17px;
+  }
+  .logo {
+    padding: 15px 20px;
+  }
+  .logoStyle{
+    height: 80px;
+  }
+}

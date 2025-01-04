@@ -1,0 +1,69 @@
+/* styles/storico.module.css */
+
+/* Global table styles */
+.tableContainer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 20px;
+  }
+  
+  .th, .td {
+    padding: 12px;
+    border: 1px solid #e2e2e2;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .tr:hover {
+    background-color: #e2f7e2;
+    cursor: pointer;
+  }
+  
+  /* Responsive table */
+  @media (max-width: 768px) {
+    .th, .td {
+      padding: 8px;
+    }
+  
+    .th {
+      font-size: 12px;
+    }
+  
+    .td {
+      font-size: 12px;
+    }
+  
+    .table {
+      font-size: 12px;
+    }
+  }
+  
+  /* Styling for no data available message */
+  .noDataMessage {
+    font-size: 18px;
+    color: #777;
+    text-align: center;
+    margin-top: 20px;
+  }
+  

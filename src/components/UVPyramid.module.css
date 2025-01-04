@@ -1,0 +1,54 @@
+.uvPyramidContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(15, 15, 17, 0.5); /* Colore di sfondo scuro */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  grid-column: span 2; /* Occupa due colonne nella griglia */
+  grid-row: span 1;    /* Occupa una riga nella griglia */
+}
+
+
+.uvTitle {
+  color: #FFD700;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.pyramid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 120px;
+  height: 240px;
+}
+
+.level {
+  width: 100%;
+  height: 10%;
+  border-bottom: 2px solid #000;
+}
+
+.uvDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #ffffff;
+  margin-left: 20px; /* Aggiunto distanziamento a sinistra tra la piramide e i dettagli */
+}
+
+.uvDetails > div {
+  margin-bottom: 15px; /* Aggiunto distanziamento tra UV Index e UV Risk */
+}
+
+.uvDetails b {
+  font-size: 18px;
+}
+
+.uvDetails p {
+  font-size: 16px;
+  margin: 5px 0;
+}

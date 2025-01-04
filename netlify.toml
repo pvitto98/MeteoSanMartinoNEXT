@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[dev]
+  framework = "next"
+  command = "next dev -p 8080"
+  targetPort = 8080
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@prisma/client", "prisma"]
+
+  [functions.ignored_files]
+  paths = ["node_modules/.prisma/**"]
