@@ -1,8 +1,7 @@
 import { FunctionComponent, useState, useEffect } from "react";
 import Drawer from "./Drawer";
-import styles from "./NavigationBar.module.css";
 import Link from "next/link";  // Import next/link for routing
-
+import styles from "./NavigationBar.module.css";
 export type NavigationBar1Type = {
   className?: string;
 };
@@ -36,7 +35,7 @@ const NavigationBar: FunctionComponent<NavigationBar1Type> = ({
       <Link href="/" className={styles.logo} onClick={handleClick}>
         <img
           className={`${styles.logoStyle} ${isClicked ? styles.clicked : ""}`}
-          src="/icons/Logo.svg"
+          src="/logo.png"
           alt="Logo"
         />
       </Link>
@@ -53,7 +52,7 @@ const NavigationBar: FunctionComponent<NavigationBar1Type> = ({
       </div>
 
       <button className={styles.icsharpMenu} onClick={toggleDrawer}>
-        <img className={styles.vectorIcon} alt="Menu" src="/icons/vector.svg" />
+        <img className={styles.vectorIcon} alt="Menu" src="/vector.svg" />
       </button>
 
       {/* Only render the Drawer component when it's open */}

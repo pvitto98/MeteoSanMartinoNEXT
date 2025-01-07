@@ -6,16 +6,16 @@
 
 generator client {
   provider = "prisma-client-js"
-    binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  binaryTargets = ["native", "rhel-openssl-1.0.x", "debian-openssl-1.1.x"]
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model WeatherData {
-  id                Int      @id @default(autoincrement())
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
   date              String   @unique // Ensure the date is unique
   day               Int
   month             Int
@@ -55,5 +55,4 @@ model WeatherData {
   pm25Max           Float
   pm25Min           Float
 
-  @@index([date]) // Optional: index for faster lookups
 }

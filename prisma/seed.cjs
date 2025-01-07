@@ -6,12 +6,12 @@ const prisma = new PrismaClient();
 
 const processFile = async () => {
   try {
-    // Check if data already exists
-    const existingData = await prisma.weatherData.count();
-    if (existingData > 0) {
-      console.log('Data already exists, skipping seeding.');
-      return;
-    }
+    // // Check if data already exists
+    // const existingData = await prisma.weatherData.count();
+    // if (existingData > 0) {
+    //   console.log('Data already exists, skipping seeding.');
+    //   return;
+    // }
 
     // Path to the JSON data
     const filePath = path.join(process.cwd(), 'public', 'data.json'); // Modify as needed

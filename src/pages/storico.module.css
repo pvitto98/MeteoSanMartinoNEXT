@@ -1,69 +1,106 @@
-/* styles/storico.module.css */
 
-/* Global table styles */
+
+
+/* Global table container styles */
 .tableContainer {
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    margin-top: 20px;
-  }
-  
+  margin-top: 100px;
+  width: 90%;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding: 20px;
+  margin: 50px auto;
+  border-radius: 8px;
+  justify-items: center;
+}
+
+/* Table styles */
+.table {
+  width: 100%;
+  min-width: 900px; /* Ensures the table doesn’t get too small on narrow screens */
+  border-collapse: collapse;
+  text-align: left;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.th, .td {
+  padding: 12px;
+  border: 1px solid #e2e2e2;
+  font-size: 14px;
+  text-align: center;
+}
+
+.th {
+  background-color: #87cefa;
+  color: black;
+  font-weight: bold;
+  position: sticky; /* Keep header fixed on vertical scroll */
+  top: 0;
+  z-index: 1;
+}
+
+.tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.tr:hover {
+  background-color: #e2f7e2;
+  cursor: pointer;
+}
+
+/* Styling for grouped headers */
+.table th[colspan] {
+  text-align: center;
+  background-color: #4682b4;
+  color: white;
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+}
+
+/* No data message styling */
+.noDataMessage {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Show More button */
+.toggleButton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toggleButton:hover {
+  background-color: #45a049;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
   .th, .td {
-    padding: 12px;
-    border: 1px solid #e2e2e2;
-    font-size: 14px;
-    text-align: center;
+    padding: 8px;
   }
-  
+
   .th {
-    background-color: #4CAF50;
-    color: white;
-    font-weight: bold;
+    font-size: 12px;
   }
-  
-  .tr:nth-child(even) {
-    background-color: #f2f2f2;
+
+  .td {
+    font-size: 12px;
   }
-  
-  .tr:hover {
-    background-color: #e2f7e2;
-    cursor: pointer;
+
+  .table {
+    font-size: 12px;
   }
-  
-  /* Responsive table */
-  @media (max-width: 768px) {
-    .th, .td {
-      padding: 8px;
-    }
-  
-    .th {
-      font-size: 12px;
-    }
-  
-    .td {
-      font-size: 12px;
-    }
-  
-    .table {
-      font-size: 12px;
-    }
+
+  .toggleButton {
+    font-size: 14px;
   }
-  
-  /* Styling for no data available message */
-  .noDataMessage {
-    font-size: 18px;
-    color: #777;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
+}

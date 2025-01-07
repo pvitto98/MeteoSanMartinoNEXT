@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import styles from "./index.module.css";
+import { WeatherForecast } from "@/components/WeatherForecaster";
 
 // Dynamically import heavy components
 // const TemperatureChart = dynamic(() => import("@/components/TemperatureChart"));
@@ -224,6 +225,8 @@ const Dashboard = () => {
   uvRisk={uvRisk}
   uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")}
 />
+
+<WeatherForecast/>
             {/* <Fulmini
               lightningData={filteredLightningData as { [key: string]: string }}
               conteggio={parseFloat(lightning.count.value)}
