@@ -29,6 +29,7 @@ const WindDirection: React.FC<WindCircleProps> = ({ windDirection, windSpeed, wi
 
   return (
     <div className={styles.windCircleContainer}>
+
       <div className={styles.windCircle}>
         {/* Arrow element */}
         <div
@@ -38,7 +39,7 @@ const WindDirection: React.FC<WindCircleProps> = ({ windDirection, windSpeed, wi
           }}
         >
           <svg width="20" height="20" viewBox="0 0 100 100">
-            <polygon points="50,10 60,90 40,90" fill="#00aaff" />
+            <polygon points="50,10 60,90 40,90" fill="#757575" />
           </svg>
         </div>
         {/* Wind direction value inside the circle */}
@@ -47,15 +48,23 @@ const WindDirection: React.FC<WindCircleProps> = ({ windDirection, windSpeed, wi
         </b>
 
       </div>
+      {/* <img
+        loading="lazy"
+        src={"https://cdn.builder.io/api/v1/image/assets/TEMP/19531b8fadc1322a1e7999c30e4e1bc35940cfc4cea03766388250f741e543b4?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"}
+        className={styles.statIcon}
+        alt={`Wind direction icon`}
+      /> */}
+      <div className={styles.statLabel}>Direzione del Vento</div>
+
       {/* Wind speed below the circle */}
-      <div className={styles.windSpeedContainer}>
+      {/* <div className={styles.windSpeedContainer}>
         <div>Velocità vento:</div>
         <div>{windSpeed} km/h</div>
       </div>
       <div className={styles.windSpeedContainer}>
         <div>Raffica di vento:</div>
         <div>{windGust} km/h</div>
-      </div>
+      </div> */}
     </div>
   );
 };

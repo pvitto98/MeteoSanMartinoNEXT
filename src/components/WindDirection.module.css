@@ -3,11 +3,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    background-color: #3d3e47;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    gap: 10px;
+    /* background-color: #3d3e47; */
+    /* box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); */
     border-radius: var(--br-6xl);
-    padding: 20px;
+    padding:15px 10px 10px 10px;
   }
   
   .windCircle {
@@ -57,7 +57,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #3d3e47; /* Azzurro pastello */
+    /* background-color: #3d3e47; Azzurro pastello */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,7 +74,7 @@
   .windDirectionValue {
     position: absolute;
     font-size: 15px;
-    color: #FFFFFF;
+    color: #757575;
   }
   
   .windSpeedWrapper {
@@ -87,14 +87,20 @@
   
   .windSpeedLabel {
     font-size: var(--font-size-base);
-    color: #FFFFFF;
+    color: #757575;
   }
   
   .windSpeedValue {
     font-family: var(--font-helvetica-rounded);
     font-size: var(--font-size-21xl);
-    color: #FFFFFF;
+    color: #757575;
   }
 
+    
+  .statLabel {
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 4px;
+  }
 
   

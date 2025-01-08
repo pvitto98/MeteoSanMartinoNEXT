@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
+.temperature {
+  border-radius: 30px;
+  background-color: rgba(138, 141, 147, 0.05);
+  box-shadow: 0px 10px 20px 0px rgba(9, 0, 63, 0.25);;
+  display: flex;
+  min-width: 300px;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  flex-basis: 50px;
+  margin: auto 0;
+  padding: 20px 0px 30px;
+  font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+  background-color: #C9E5FF;
+}
+
+/* Add a night mode class for the section */
+.nightMode {
+  background-color: #1F2E54;
+  color: white;
+}
+
+/* Styling for the main content */
+.mainContent {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  text-align: center;
+}
+
+.infoContainer {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin: auto 0;
+}
+
+.dateContainer {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  letter-spacing: 0.2px;
+  justify-content: start;
+  font-weight: 100;
+}
+
+.date,
+.textStart {
+  color: #658CAF;
+  font-size: 11px;
+}
+
+.textStart {
+  text-align: start;
+  font-weight: 300;
+}
+
+.condition {
+  color: #658CAF;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* When it's night mode, text becomes white */
+.nightMode .condition,
+.nightMode .date,
+.nightMode .textStart,
+.nightMode .label,
+.nightMode .value {
+  color: white;
+}
+
+.nightMode .temperatureValue
+{
+  background-image: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF00 100%);
+  -webkit-background-clip: text; /* Ensures the background is clipped to the text */
+  background-clip: text; /* Standard property for compatibility */
+  color: transparent; /* Make the text color transparent so the gradient shows */
+}
+
+.temperatureValue {
+  margin-top: 8px;
+  width: 100%;
+  gap: 4px;
+  font-size: 55px;
+  background-image: linear-gradient(120deg, #296399 45%, #ffffff 120%);
+  -webkit-background-clip: text; /* Ensures the background is clipped to the text */
+  background-clip: text; /* Standard property for compatibility */
+  color: transparent; /* Make the text color transparent so the gradient shows */  font-weight: 700;
+  line-height: 1.1;
+  text-align: start;
+}
+
+/* Adjust icon style */
+.weatherIcon {
+  object-fit: cover;
+  object-position: center;
+  width: 130px;
+  scale: 2;
+align-self: stretch;
+  margin: auto 0;
+  filter: drop-shadow(0px 34px 100px rgba(9, 0, 63, 0.38));
+}
+
+/* Additional Values Styling */
+.additionalValues {
+  display: flex;
+  margin-top: 25px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.container {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: auto 0;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 400;
+  color: #658CAF;
+  letter-spacing: 0.2px;
+}
+
+.value {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: #296399;
+}
+
+.unit {
+  font-size: 10px; /* Smaller font size */
+  font-weight: 400; /* Normal weight */
+  margin-left: 2px; /* Add some space between value and unit */
+}
+
+.unitBig {
+  font-size: 40px;
+  font-weight: 400;
+  margin-left: 2px;
+}

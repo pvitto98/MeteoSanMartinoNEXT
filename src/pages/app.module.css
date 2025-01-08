@@ -1,0 +1,13 @@
+.weatherPage {
+        background-color: rgba(255, 255, 255, 1);
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: Rubik, sans-serif;
+        letter-spacing: 0.2px;
+        margin: 0 auto;
+        padding: 30px;
+        overflow: visible;
+      }
+      

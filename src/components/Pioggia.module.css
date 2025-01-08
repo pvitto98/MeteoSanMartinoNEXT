@@ -76,9 +76,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 10px 50px 0px rgba(9, 0, 63, 0.38);
+  min-width: 300px;
   border-radius: var(--br-mini);
-  background-color: #2F4F4F; /* Grigio scuro per maggiore contrasto */
+  background-color: #FFFFFF; /* Grigio scuro per maggiore contrasto */
   box-sizing: border-box;
   padding: var(--padding-6xl);
   font-size: var(--font-size-13xl);
@@ -86,7 +87,7 @@
   font-family: var(--font-helvetica-rounded);
   width: 100%;  /* Occupa tutta la larghezza dell'area grid */
   height: 100%; /* Occupa tutta l'altezza dell'area grid */
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .rateh {

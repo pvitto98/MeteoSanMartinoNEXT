@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
+.weatherContainer {
+    font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+    border-radius: 24px;
+    background-color: white;
+    box-shadow: 0px 10px 50px 0px rgba(9, 0, 63, 0.25);;
+    display: flex;
+    flex-direction: column;
+    
+    min-width: 300px;
+    max-width: 400px;
+    align-items: center;
+    color: rgba(117, 117, 117, 1);
+    text-align: center;
+    letter-spacing: 0.2px;
+    justify-content: center;
+    flex: 1;
+    padding: 10px 0px 20px;
+  }
+  
+  .statContainer {
+    display: flex;
+    min-width: 60px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+  
+  .statIcon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 25px;
+  }
+  
+  .statContent {
+    display: flex;
+    margin-top: 14px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .statValue {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .statLabel {
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 4px;
+  }
+
+  .uvTitle {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    align-self: center;
+    margin: 0;
+  }
+  
+  .uvContent {
+    display: flex;
+    margin-top: 15px;
+    width: 100%;
+    align-items: center;
+    gap: 40px 50px;
+    justify-content: center;
+  }
+
+  .statUnit {
+    font-size: 10px; /* Smaller font size */
+    font-weight: 400; /* Normal weight */
+    margin-left: 2px; /* Add some space between value and unit */
+      }

@@ -250,7 +250,7 @@ const getYesterdayDateRome = () => {
   const romeCurrentDate = new Date(year, month - 1, day);
 
   // Subtract one day to get yesterday's date in Rome
-  romeCurrentDate.setDate(romeCurrentDate.getDate() );
+  romeCurrentDate.setDate(romeCurrentDate.getDate() -1);
 
   // Format yesterday's date as 'YYYYMMDD'
   const formattedDate = romeCurrentDate.toISOString().split('T')[0].replace(/-/g, '');

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
+
 @keyframes slide-in-top {
   0% {
     transform: translateY(-200px);
@@ -17,9 +20,9 @@
   left: 0;
   width: 100%;
   /* Full width */
-  height: 100svh;
+  height: 100%;
   /* Full height */
-  background-color: var(--color-gray);
+  background-color: white;
   /* Background color */
   z-index: 9999;
   /* Ensure it's on top */
@@ -32,6 +35,9 @@
   animation: 0.25s ease 0s 1 normal forwards slide-in-top;
   /* Animation */
   padding-bottom: 25px;
+  font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+  color: #757575;
+  font-weight: 500;
 }
 
 .links {

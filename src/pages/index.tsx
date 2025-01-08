@@ -7,6 +7,11 @@ import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import styles from "./index.module.css";
 import { WeatherForecast } from "@/components/WeatherForecaster";
+import { Rainfall } from "@/newComponents/Rainfall";
+import { WeatherStats } from "@/newComponents/Wind";
+import { UVStats } from "@/newComponents/UV";
+import { AirQuality } from "@/newComponents/AirQuality";
+import { WeatherCard } from "@/newComponents/Weather";
 
 // Dynamically import heavy components
 // const TemperatureChart = dynamic(() => import("@/components/TemperatureChart"));
@@ -112,11 +117,11 @@ const Dashboard = () => {
       const now = new Date();
       const startDate = formatDateTime(now, true);
       const endDate = formatDateTime(now, false);
-  
+
       try {
         const response = await fetch(`/api/device/history?start_date=${startDate}&end_date=${endDate}`);
         const result = await response.json();
-        
+
         setTemperatureData(result.data.outdoor);
         // setLightningData(result.data.lightning?.distance.list);
         setWindData({
@@ -128,10 +133,10 @@ const Dashboard = () => {
         console.error("Error fetching temperature data:", error);
       }
     };
-  
+
     fetchTemperatureData();
   }, []);
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -150,7 +155,7 @@ const Dashboard = () => {
     const intervalId = setInterval(() => {
       fetchData();
       setCurrentDateTime(getCurrentDateTime());
-    }, 10000);
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -175,69 +180,102 @@ const Dashboard = () => {
   //   )
   // );
 
+  const getMostRecentLightning = (lightningData: Record<string, string>, currentDateTime: { day: string; time: string }) => {
+    const currentTime = new Date();
+    let recentLightning = null;
+  
+    Object.entries(lightningData).forEach(([time, value]) => {
+      const lightningTime = new Date(time);
+      const timeDifference = (currentTime.getTime() - lightningTime.getTime()) / (1000 * 60);
+  
+      if (timeDifference <= 30) {
+        recentLightning = { time, value };
+      }
+    });
+
+  
+    return recentLightning;
+  };
+
+  const mostRecentLightning = getMostRecentLightning(lightning?.distance?.list || {}, currentDateTime);
+
+
   const uvRisk = determineUVRisk(parseFloat(solar_and_uvi?.uvi.value ?? "0"));
 
   return (
-    <div className={styles.dashboard}>
+    <div className={styles.weatherContent}>
+      <WeatherCard temperature={parseFloat(outdoor?.temperature.value ?? "0")} perceivedTemperature={parseFloat(outdoor?.feels_like.value ?? "0")} dewPoint={parseFloat(outdoor?.dew_point.value ?? "0")} humidity={parseFloat(outdoor?.humidity.value ?? "0")} pressure={parseFloat(pressure?.relative.value ?? "0")} rainRate={parseFloat(rainfall?.rain_rate.value ?? "0")} lightningCount={parseFloat(lightning?.count.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} />
+      <WeatherStats 
+      windSpeed={parseFloat(wind?.wind_speed.value ?? "0")}
+windDirection={parseFloat(wind?.wind_direction.value ?? "0")}
+windGust={parseFloat(wind?.wind_gust.value ?? "0")} />
+      <Rainfall  
+      rate={parseFloat(rainfall?.rain_rate.value ?? "0")} dailyRain={parseFloat(rainfall?.daily.value ?? "0")} monthlyRain={parseFloat(rainfall?.monthly.value ?? "0")} />
 
-      <div className={styles.content}>
-        <div className={styles.fixedTemperatureCard}>
-          <Temperature
-            temperature={parseFloat(outdoor?.temperature.value ?? "0")}
-            perceivedTemperature={parseFloat(outdoor?.feels_like.value ?? "0")}
-            dewPoint={parseFloat(outdoor?.dew_point.value ?? "0")}
-            humidity={parseFloat(outdoor?.humidity.value ?? "0")}
-            pressure={parseFloat(pressure?.relative.value ?? "0")}
-            windSpeed={parseFloat(wind?.wind_speed.value ?? "0")}
-            windDirection={parseFloat(wind?.wind_direction.value ?? "0")}
-            day={currentDateTime.day}
-            time={currentDateTime.time}
-            rainRate={parseFloat(rainfall?.rain_rate.value ?? "0")}
-            lightningCount={parseFloat(lightning?.count.value ?? "0")}
-          />
-
-<WindDirection
-  windSpeed={parseFloat(wind?.wind_speed.value ?? "0")}
-  windDirection={parseFloat(wind?.wind_direction.value ?? "0")}
-  windGust={parseFloat(wind?.wind_gust.value ?? "0")}
-/>
-
-        </div>
-
-        <main className={styles.main}>
-          <div className={styles.gridContainer}>
-            {/* <TemperatureChart data={temperatureData} />
-            <Pioggia
-              todayRain={rainfall.daily.value}
-              weeklyRain={rainfall.weekly.value}
-              monthlyRain={rainfall.monthly.value}
-              annualRain={rainfall.yearly.value}
-              rainRate={rainfall.rain_rate.value}
-              eventRain={rainfall.event.value}
-            /> */}
-<PM25
-  aqiValue={parseFloat(pm25_ch1?.real_time_aqi.value ?? "0")}
-  pm25Value={parseFloat(pm25_ch1?.pm25.value ?? "0")}
-/>
-
-<UVPyramid
-  uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")}
-  uvRisk={uvRisk}
-  uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")}
-/>
-
-<WeatherForecast/>
-            {/* <Fulmini
-              lightningData={filteredLightningData as { [key: string]: string }}
-              conteggio={parseFloat(lightning.count.value)}
-              myCoords={{ lat: 38.088778, lon: 13.250223 }}
-            /> */}
-          </div>
-        </main>
-      </div>
+      
+      <UVStats uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} />
+      <AirQuality  aqi={parseFloat(pm25_ch1?.real_time_aqi.value ?? "0")}  pm25={parseFloat(pm25_ch1?.pm25.value ?? "0")}/>
     </div>
   );
 };
+
+
+
+// <div className={styles.content}>
+// <div className={styles.fixedTemperatureCard}>
+//   <Temperature
+//     temperature={parseFloat(outdoor?.temperature.value ?? "0")}
+//     perceivedTemperature={parseFloat(outdoor?.feels_like.value ?? "0")}
+//     dewPoint={parseFloat(outdoor?.dew_point.value ?? "0")}
+//     humidity={parseFloat(outdoor?.humidity.value ?? "0")}
+//     pressure={parseFloat(pressure?.relative.value ?? "0")}
+//     windSpeed={parseFloat(wind?.wind_speed.value ?? "0")}
+//     windDirection={parseFloat(wind?.wind_direction.value ?? "0")}
+//     day={currentDateTime.day}
+//     time={currentDateTime.time}
+//     rainRate={parseFloat(rainfall?.rain_rate.value ?? "0")}
+//     lightningCount={parseFloat(lightning?.count.value ?? "0")}
+//   />
+
+// <WindDirection
+// windSpeed={parseFloat(wind?.wind_speed.value ?? "0")}
+// windDirection={parseFloat(wind?.wind_direction.value ?? "0")}
+// windGust={parseFloat(wind?.wind_gust.value ?? "0")}
+// />
+
+// </div>
+
+// <main className={styles.main}>
+//   <div className={styles.gridContainer}>
+//     {/* <TemperatureChart data={temperatureData} />
+//     <Pioggia
+//       todayRain={rainfall.daily.value}
+//       weeklyRain={rainfall.weekly.value}
+//       monthlyRain={rainfall.monthly.value}
+//       annualRain={rainfall.yearly.value}
+//       rainRate={rainfall.rain_rate.value}
+//       eventRain={rainfall.event.value}
+//     /> */}
+// <PM25
+// aqiValue={parseFloat(pm25_ch1?.real_time_aqi.value ?? "0")}
+// pm25Value={parseFloat(pm25_ch1?.pm25.value ?? "0")}
+// />
+
+// <UVPyramid
+// uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")}
+// uvRisk={uvRisk}
+// uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")}
+// />
+
+// <WeatherForecast/>
+//     {/* <Fulmini
+//       lightningData={filteredLightningData as { [key: string]: string }}
+//       conteggio={parseFloat(lightning.count.value)}
+//       myCoords={{ lat: 38.088778, lon: 13.250223 }}
+//     /> */}
+//   </div>
+// </main>
+// </div>
 
 const getCurrentDateTime = () => {
   const now = new Date();

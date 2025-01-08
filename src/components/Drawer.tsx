@@ -20,7 +20,7 @@ const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
       <div className={styles.logo} onClick={handleLogoClick}>
         <img
           className={`${styles.logoStyle} ${isClicked ? styles.clicked : ""}`}
-          src="/icons/Logo.svg"
+          src="/logo.png"
           alt="PVITTO Logo"
         />
       </div>
@@ -35,7 +35,7 @@ const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
       </div>
       {onClose && (
         <button onClick={onClose} className={styles.closeButton}>
-          <img src="/icons/ic_baseline-close.svg" alt="Close" />
+          <img src="/ic_baseline-close.svg" alt="Close" />
         </button>
       )}
     </div>
