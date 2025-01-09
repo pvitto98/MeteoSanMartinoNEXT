@@ -12,9 +12,10 @@
   flex: 1;
   flex-basis: 50px;
   margin: auto 0;
-  padding: 20px 0px 30px;
+  padding: 20px 10px 30px;
   font-family: 'Rubik', sans-serif; /* Apply Rubik font */
   background-color: #C9E5FF;
+  gap: 15px;
 }
 
 /* Add a night mode class for the section */
@@ -104,9 +105,11 @@
 .weatherIcon {
   object-fit: cover;
   object-position: center;
-  width: 130px;
-  scale: 2;
-align-self: stretch;
+  width: 120px;
+  background-size: 200%;  /* Make the image larger for zoom effect */
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;      /* Hide the overflow */align-self: stretch;
   margin: auto 0;
   filter: drop-shadow(0px 34px 100px rgba(9, 0, 63, 0.38));
 }
@@ -114,10 +117,10 @@ align-self: stretch;
 /* Additional Values Styling */
 .additionalValues {
   display: flex;
-  margin-top: 25px;
+  margin-top: 15px;
   width: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .container {
@@ -138,7 +141,7 @@ align-self: stretch;
 }
 
 .value {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   margin-top: 4px;
   color: #296399;
@@ -155,3 +158,58 @@ align-self: stretch;
   font-weight: 400;
   margin-left: 2px;
 }
+
+
+.weatherIconWrapper {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  background-size: 100%; /* Initial size before zoom */
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: zoomInEffect 0.5s ease-out forwards; /* Zoom-in animation */
+}
+
+@keyframes zoomInEffect {
+  to {
+    background-size: 110%; /* Final zoomed-in size */
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+.temperature{
+  min-width: 500px
+}
+
+.condition{
+  font-size: 25px;
+}
+
+.temperatureValue{
+  font-size: 70px
+}
+.textStart{
+  font-size: 16px;
+}
+
+.mainContent{
+  justify-content: space-around;
+}
+
+.value {
+  font-size: 25px;
+}
+.label{
+  font-size: 12px;
+}
+}
+
+
+@media screen and (min-width: 425px) {
+
+  .temperature{
+    min-width: 400px
+  }
+  }
+  

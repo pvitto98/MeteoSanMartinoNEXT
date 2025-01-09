@@ -3,7 +3,7 @@ import styles from './AirQuality.module.css';
 
 export interface AirQualityMetricProps {
   icon: string;
-  value: number;
+  value: string| number;
   label: string;
   unit?: string;
 }
@@ -39,13 +39,27 @@ const AirQualityMetric: React.FC<AirQualityMetricProps> = ({
   );
 };
 
+// Function to get the qualitative air quality label based on AQI value
+function getAirQualityLabel(aqi: number): string {
+  if (aqi <= 20) return "Ottima";
+  if (aqi <= 50) return "Molto buona";
+  if (aqi <= 80) return "Buona";
+  if (aqi <= 100) return "Discreta";
+  if (aqi <= 130) return "Accettabile";
+  if (aqi <= 150) return "Mediocre";
+  if (aqi <= 200) return "Scadente";
+  if (aqi <= 250) return "Inquinata";
+  if (aqi <= 300) return "Molto Inquinata";
+  return "Pessima"; // For AQI > 300
+}
+
 export const AirQuality: React.FC<AirQualityProps> = ({ aqi, pm25 }) => {
   const metrics = [
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/915b8aa5e153108ce1a23cd61b29ccac183388cb0b640c6338007033c72f3da3?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
-      value: aqi,
+      value: getAirQualityLabel(aqi),
       unit: "",
-      label: "AQI"
+      label: "Qualita" // Use the qualitative label instead of "AQI"
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/eedb2cfea0957740f3ca4872a3c8cc1f5b725e1bf62111f5f724e544e891de22?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
@@ -58,7 +72,7 @@ export const AirQuality: React.FC<AirQualityProps> = ({ aqi, pm25 }) => {
   return (
     <section className={styles.airQuality} aria-labelledby="air-quality-title">
       <h2 id="air-quality-title" className={styles.title}>
-        Qualita aria
+        Qualità aria
       </h2>
       <div className={styles.metricsContainer}>
         {metrics.map((metric, index) => (

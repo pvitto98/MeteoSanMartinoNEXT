@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './Weather.module.css';
+import { useEffect, useState } from 'react';
 
 const getWeatherIcon = (
   uvSolar: number, // Replace isNight with uvSolar
@@ -35,7 +36,7 @@ const getWeatherIcon = (
       }
       return {
         icon: "/thunder.png",
-        condition: "Temporale",
+        condition: "Fulmini",
       };
     }
   }
@@ -43,7 +44,7 @@ const getWeatherIcon = (
   // Handle rain icons
   if (rainRate > 0) {
     return {
-      icon: isNight ? "/night-rain-icon.png" : "/day-rain-icon.png",
+      icon: isNight ? "/WeatherIcons/night-rain-icon.png" : "/WeatherIcons/day-rain-icon.png",
       condition: "Pioggia",
     };
   }
@@ -121,14 +122,16 @@ const WeatherValue: React.FC<{ label: string; value: string }> = ({
   const [numericValue, unit] = value.split(/([^\d.,]+)/); // Splits value into number and unit
   return (
     <div className={styles.container}>
-      <div className={styles.label}>{label}</div>
       <div className={styles.value}>
         {numericValue}
         <span className={styles.unit}>{unit}</span>
       </div>
+      <div className={styles.label}>{label}</div>
+
     </div>
   );
 };
+
 
 
 export const WeatherCard: React.FC<TemperatureType> = ({
@@ -141,11 +144,13 @@ export const WeatherCard: React.FC<TemperatureType> = ({
   lightningCount,
   uvSolar,
 }) => {
-  const weatherValues = [
-    { label: "Dew Point", value: `${dewPoint}°C` },
-    { label: "Humidity", value: `${humidity}%` },
-    { label: "Pressure", value: `${pressure} hPa` }
-  ];
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    // Trigger animation after a short delay to ensure component is mounted
+    const timer = setTimeout(() => setAnimate(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const { icon: weatherIcon, condition } = getWeatherIcon(
     uvSolar,
@@ -154,21 +159,15 @@ export const WeatherCard: React.FC<TemperatureType> = ({
     ""
   );
 
-  const todayDate = new Date().toLocaleDateString("it-IT", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-
-  // Determine if it's night mode
-  const isNight = uvSolar === 0; // or any other logic to determine day/night
-
   return (
-    <section className={`${styles.temperature} ${isNight ? styles.nightMode : ''}`} aria-label="Weather information">
+    <section
+      className={`${styles.temperature} ${uvSolar === 0 ? styles.nightMode : ''}`}
+      aria-label="Weather information"
+    >
       <div className={styles.mainContent}>
         <div className={styles.infoContainer}>
           <div className={styles.dateContainer}>
-            <div className={styles.date}>{todayDate}</div>
+            <div className={styles.date}>{new Date().toLocaleDateString('it-IT')}</div>
             <div className={styles.condition}>{condition}</div>
           </div>
           <div className={styles.temperatureValue}>
@@ -180,21 +179,25 @@ export const WeatherCard: React.FC<TemperatureType> = ({
             <span className={styles.unit}>°C</span>
           </div>
         </div>
-        <img
-          loading="lazy"
-          src={weatherIcon}
-          className={styles.weatherIcon}
-          alt={`Weather condition: ${condition}`}
+        <div
+          className={`${styles.weatherIconWrapper} ${animate ? styles.zoom : ''}`}
+          style={{ backgroundImage: `url(${weatherIcon})` }}
+          aria-label={`Weather condition: ${condition}`}
         />
       </div>
       <div className={styles.additionalValues}>
-        {weatherValues.map((item, index) => (
+        {[
+          { label: 'Dew Point', value: `${dewPoint}°C` },
+          { label: 'Humidity', value: `${humidity}%` },
+          { label: 'Pressure', value: `${pressure} hPa` },
+        ].map((item, index) => (
           <WeatherValue key={index} label={item.label} value={item.value} />
         ))}
       </div>
     </section>
   );
 };
+
 
 
 export default WeatherCardContainer;

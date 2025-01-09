@@ -9,7 +9,7 @@
     flex-direction: column;
     
     min-width: 300px;
-    max-width: 400px;
+    max-width: 700px;
     align-items: center;
     color: rgba(117, 117, 117, 1);
     text-align: center;
@@ -17,6 +17,7 @@
     justify-content: center;
     flex: 1;
     padding: 10px 0px 20px;
+    gap: 10px;
   }
   
   .statContainer {
@@ -36,7 +37,7 @@
   
   .statContent {
     display: flex;
-    margin-top: 14px;
+    margin-top: 8px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -51,6 +52,23 @@
     font-size: 10px;
     font-weight: 400;
     margin-top: 4px;
+  }
+
+  .windContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    row-gap: 15px;
+  }
+  
+  .windValues {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-wrap: wrap;
+    min-width: 100px;
   }
 
   .uvTitle {
@@ -76,3 +94,41 @@
     font-weight: 400; /* Normal weight */
     margin-left: 2px; /* Add some space between value and unit */
       }
+
+
+
+      @media screen and (min-width: 768px) {
+        .weatherContainer {
+          justify-content: space-around;
+          min-width: 350px;
+        }
+        .windContainer {
+          flex-wrap: nowrap;
+        }
+
+        .statValue{
+          font-size: 22px;
+        }
+        .statLabel{
+          font-size: 12px
+        }
+    
+        .statIcon{
+          width: 30px;
+        }
+        .statUnit{
+          font-size: 10px;
+        }
+
+      }
+
+      @media screen and (min-width: 425px) {
+        .weatherContainer {
+          min-width: 350px;
+        }
+        .windValues {
+          min-width: 150px;
+        }
+      }
+
+      

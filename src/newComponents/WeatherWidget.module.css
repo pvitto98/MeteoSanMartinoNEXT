@@ -1,0 +1,167 @@
+.dailyValue {
+    border-radius: 24px;
+    background-color: rgba(138, 141, 147, 0.05);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px 5px;
+    font-family: Rubik, sans-serif;
+    max-width: 500px;
+    width: 100%;
+    align-items: center;
+    justify-self: center;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    color: rgba(117, 117, 117, 1);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    padding: 0 10px;
+  }
+
+  .expandButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .expandIcon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .values {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-self: center;
+
+  }
+  
+  .firstRow,
+  .secondRow {
+    display: flex;
+    justify-content: space-around;;
+    align-items: start;
+    min-width: 300px;
+    max-width: 500px;
+  }
+
+  .secondRow {
+    display: none;
+  }
+  
+  .weatherValue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+  }
+  
+  .weatherIcon {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .valueContent {
+    margin-top: 8px;
+    text-align: center;
+    justify-items: center;
+  }
+  
+  .mainValue {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  
+  .value {
+    font-size: 18px;
+    line-height: 0.8;
+    color: rgba(117, 117, 117, 1);
+  }
+  
+  .unit {
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(97, 97, 97, 1);
+  }
+  
+  .minMaxValues {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+    font-size: 10px;
+    color: rgba(117, 117, 117, 1);
+    font-weight: 400;
+    letter-spacing: 0.14px;
+  }
+  
+  .maxValue,
+  .minValue {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  .minMaxIcon {
+    width: 6px;
+    height: 10px;
+  }
+
+  /* Force the second row to be shown when toggled, even on mobile */
+.secondRow.show {
+  display: flex;
+}
+  
+  @media (max-width: 1200px) {
+    .secondRow {
+      transition: opacity 0.3s ease-in-out;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .dailyValue {
+      min-width: 800px;
+      
+    }
+    
+    .firstRow,
+    .secondRow {
+      display: flex;
+      justify-content: center;
+      gap:50px;
+      max-width: none;
+    }
+
+    .values{
+      flex-direction: row;
+      gap: 50px;
+    }
+
+    .secondRow {
+      display: flex;
+    }
+
+    .expandButton{
+      display: none;
+    }
+
+    .header{
+      justify-content: center;
+    }
+
+    .weatherIcon{
+      width: 20px;
+      height: 20px;
+    }
+
+  }

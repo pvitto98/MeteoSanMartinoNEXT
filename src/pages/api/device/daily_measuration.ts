@@ -32,14 +32,15 @@ type WunderResponseType = {
       pressureTrend: number;
       precipRate: number;
       precipTotal: number;
-      winddirAvg: number;
-      humidityHigh: number;
-      humidityLow: number;
-      humidityAvg: number;
     };
     solarRadiationHigh: number;
     uvHigh: number;
     epoch: number;
+    humidityHigh: number;
+    humidityLow: number;
+    humidityAvg: number;
+    winddirAvg: number;
+
   }[];
 };
 
@@ -144,6 +145,9 @@ const getDataFromAPIs = async (date: string) => {
 
 // Function to calculate the values from the raw data
 const calculateValues = (wunderData: WunderResponseType, ecowittData: EcowittResponseType) => {
+
+  console.log(wunderData);
+  console.log( wunderData?.observations[0]?.metric);
   // Extract Wunder data
   const tempHigh = wunderData?.observations[0]?.metric?.tempHigh || 0;
   const tempLow = wunderData?.observations[0]?.metric?.tempLow || 0;
@@ -171,10 +175,10 @@ const calculateValues = (wunderData: WunderResponseType, ecowittData: EcowittRes
   const timestamp = wunderData?.observations[0]?.epoch || 0;
   const solarRadiationHigh = wunderData?.observations[0]?.solarRadiationHigh || 0;
   const uvHigh = wunderData?.observations[0]?.uvHigh || 0;
-  const winddirAvg = wunderData?.observations[0]?.metric?.winddirAvg || 0;
-  const humidityHigh = wunderData?.observations[0]?.metric?.humidityHigh || 0;
-  const humidityLow = wunderData?.observations[0]?.metric?.humidityLow || 0;
-  const humidityAvg = wunderData?.observations[0]?.metric?.humidityAvg || 0;
+  const winddirAvg = wunderData?.observations[0]?.winddirAvg || 0;
+  const humidityHigh = wunderData?.observations[0]?.humidityHigh || 0;
+  const humidityLow = wunderData?.observations[0]?.humidityLow || 0;
+  const humidityAvg = wunderData?.observations[0]?.humidityAvg || 0;
 
   // Extract Ecowitt data
   const lightningCount =
@@ -263,8 +267,13 @@ const getYesterdayDateRome = () => {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log("Handler called");
   try {
-    // If date parameter is not provided, use yesterday's date
-    const targetDate = getYesterdayDateRome();
+    // Extract date parameter or use yesterday's date if not provided
+    const targetDate = req.query.date ? req.query.date.toString() : getYesterdayDateRome();
+
+    // Validate date format if provided
+    if (req.query.date && !/^\d{8}$/.test(req.query.date.toString())) {
+      return res.status(400).json({ error: 'Invalid date format. Expected YYYYMMDD.' });
+    }
 
     // Extract day, month, and year from the targetDate
     const year = parseInt(targetDate.substring(0, 4), 10);
@@ -272,18 +281,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const day = parseInt(targetDate.substring(6, 8), 10);
 
     // Fetch raw data from APIs
-    const { wunderData, ecowittData } = await getDataFromAPIs(targetDate as string);
+    const { wunderData, ecowittData } = await getDataFromAPIs(targetDate);
 
     // Calculate values for logging
     const calculatedValues = calculateValues(wunderData, ecowittData);
-
-    // Log the calculated values to the console
-    console.log('Calculated values:', calculatedValues);
-
-    // Ensure calculatedValues is valid (not null or undefined)
-    if (!calculatedValues || typeof calculatedValues !== 'object') {
-      throw new Error('Calculated values are invalid');
-    }
 
     // Save the data directly, including day, month, and year
     const savedData = await prisma.weatherData.create({
@@ -303,3 +304,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+

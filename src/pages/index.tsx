@@ -12,6 +12,8 @@ import { WeatherStats } from "@/newComponents/Wind";
 import { UVStats } from "@/newComponents/UV";
 import { AirQuality } from "@/newComponents/AirQuality";
 import { WeatherCard } from "@/newComponents/Weather";
+import { WeatherWidget } from "@/newComponents/WeatherWidget";
+import TemperatureChart from "@/newComponents/TemperatureChart";
 
 // Dynamically import heavy components
 // const TemperatureChart = dynamic(() => import("@/components/TemperatureChart"));
@@ -102,6 +104,8 @@ interface DeviceData {
   pm25_sensor_ch1?: TimedValue;
   sensor_array?: TimedValue;
 }
+
+
 
 
 const Dashboard = () => {
@@ -215,6 +219,7 @@ windGust={parseFloat(wind?.wind_gust.value ?? "0")} />
       
       <UVStats uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} />
       <AirQuality  aqi={parseFloat(pm25_ch1?.real_time_aqi.value ?? "0")}  pm25={parseFloat(pm25_ch1?.pm25.value ?? "0")}/>
+      {/* <TemperatureChart data={temperatureData}/> */}
     </div>
   );
 };

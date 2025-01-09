@@ -27,8 +27,6 @@ const getCardinalDirection = (degrees: number) => {
   return "";
 };
 
-
-
 const WeatherStat: React.FC<WeatherStatProps> = ({ icon, value, label, unit }) => {
   return (
     <div className={styles.statContainer}>
@@ -66,7 +64,7 @@ export const WeatherStats: React.FC<WeatherStatsProps> = ({ windSpeed, windDirec
     //   label: "Dir. Vento"
     // },
     {
-      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/0c19039dde951fe819ad3632a38a58435aff18e3a049b9badf49e4b6daff4aa5?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
+      icon: "./Raffica.svg",
       value: `${windGust}`,
       label: "Raffica",
       unit: "Km/h"
@@ -76,23 +74,24 @@ export const WeatherStats: React.FC<WeatherStatsProps> = ({ windSpeed, windDirec
   return (
     <section className={styles.weatherContainer} aria-label="Weather Statistics">
       <h2 id="uv-title" className={styles.uvTitle}>Vento</h2>
-      <WindDirection
-        windSpeed={windSpeed}
-        windDirection={windDirection}
-        windGust={windGust}
-      />
-      <div className={styles.uvContent} role="list">
-
-        {weatherStats.map((stat, index) => (
-          <WeatherStat
-            key={`weather-stat-${index}`}
-            icon={stat.icon}
-            value={stat.value}
-            label={stat.label}
-            unit={stat.unit}
-          />
-        ))}
-
+      <div className={styles.windContainer}>
+        <WindDirection
+          windSpeed={windSpeed}
+          windDirection={windDirection}
+          windGust={windGust}
+        />
+        {/* Grouping wind speed and direction values */}
+        <div className={styles.windValues} role="list">
+          {weatherStats.map((stat, index) => (
+            <WeatherStat
+              key={`weather-stat-${index}`}
+              icon={stat.icon}
+              value={stat.value}
+              label={stat.label}
+              unit={stat.unit}
+            />
+          ))}
+        </div>
 
       </div>
 

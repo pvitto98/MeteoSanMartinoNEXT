@@ -1,7 +1,8 @@
 import { GetServerSideProps } from 'next';
-import { useState } from 'react';
-import styles from './storico.module.css'; // Import the CSS module
+import { useState, useEffect } from 'react';
+import styles from './storico.module.css';
 import "../global.css";
+import { WeatherWidget } from '@/newComponents/WeatherWidget';
 
 interface WeatherData {
   id: number;
@@ -45,48 +46,57 @@ interface WeatherData {
 }
 
 interface StoricoProps {
-  weatherData: WeatherData[];
   years: string[];
   months: string[];
 }
 
-const StoricoPage = ({ weatherData, years, months }: StoricoProps) => {
-  // Find the most recent date in weatherData
-  const lastDate = weatherData.reduce((latest, data) => {
-    const currentDataDate = new Date(data.year, data.month - 1, data.day);
-    return currentDataDate > latest ? currentDataDate : latest;
-  }, new Date(0)); // Initialize with a very old date
+const StoricoPage = ({ years, months }: StoricoProps) => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear().toString();
+  const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
 
-  const lastYear = lastDate.getFullYear().toString();
-  const lastMonth = (lastDate.getMonth() + 1).toString().padStart(2, '0');
-  // Set initial state with current year and month
-  const [selectedYear, setSelectedYear] = useState<string | undefined>(lastYear);
-  const [selectedMonth, setSelectedMonth] = useState<string | undefined>(lastMonth);
+  const [weatherData, setWeatherData] = useState<WeatherData[]>([]);
+  const [selectedYear, setSelectedYear] = useState<string>(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
+  const [loading, setLoading] = useState(false);
 
-  const [showAll, setShowAll] = useState(false); // State for showing all data
+  const fetchWeatherData = async (year: string, month?: string) => {
+    setLoading(true);
+    try {
+      const query = new URLSearchParams({ year });
+      if (month) query.append('month', month);
 
-  // Limit the initial display to 100 rows
-  const displayedData = showAll ? weatherData : weatherData.slice(0, 100);
+      const res = await fetch(`/api/weather?${query.toString()}`);
+      if (res.ok) {
+        const { weatherData } = await res.json();
+        setWeatherData(weatherData);
+      } else {
+        console.error('Failed to fetch weather data');
+        setWeatherData([]);
+      }
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      setWeatherData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Filter weather data using year and month properties
-  const filteredData = displayedData.filter((data) => {
-    const matchesYear = selectedYear ? data.year.toString() === selectedYear : true;
-    const matchesMonth = selectedMonth ? data.month.toString().padStart(2, '0') === selectedMonth : true;
-    return matchesYear && matchesMonth;
-  });
+  useEffect(() => {
+    fetchWeatherData(selectedYear, selectedMonth);
+  }, [selectedYear, selectedMonth]);
 
   return (
     <div className={styles.tableContainer}>
-      <h1>Weather Data History</h1>
+      <h1 className={styles.header}>Riepilogo mensile</h1>
 
-      {/* Year and Month selectors */}
-      <div className={styles.selectors}>
+      <div className={styles.selectorsContainer}>
         <select
           className={styles.selector}
           value={selectedYear}
           onChange={(e) => setSelectedYear(e.target.value)}
         >
-          <option value="">Select Year</option>
+          <option value="">Seleziona anno</option>
           {years.map((year) => (
             <option key={year} value={year}>
               {year}
@@ -99,136 +109,45 @@ const StoricoPage = ({ weatherData, years, months }: StoricoProps) => {
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
         >
-          <option value="">Select Month (Optional)</option>
+          <option value="">Seleziona mese (opzionale)</option>
           {months.map((month) => (
-            <option key={month} value={month}>
+            <option
+              key={month}
+              value={month}
+              disabled={selectedYear === currentYear && Number(month) > Number(currentMonth)}
+            >
               {month}
             </option>
           ))}
         </select>
       </div>
 
-      <table className={styles.table}>
-        <thead>
-          <tr className={styles.tr}>
-            <th rowSpan={2} className={styles.th}>Date</th> {/* Date column fixed */}
-            <th colSpan={3} className={styles.th}>Temperature (°C)</th>
-            <th colSpan={2} className={styles.th}>Pressure (hPa)</th>
-            <th colSpan={2} className={styles.th}>Humidity (%)</th>
-            <th colSpan={3} className={styles.th}>Wind (km/h)</th>
-            <th colSpan={2} className={styles.th}>UV & Solar Radiation</th>
-            <th colSpan={3} className={styles.th}>PM2.5</th>
-            <th rowSpan={2} className={styles.th}>Pioggia</th> {/* Pioggia column fixed */}
-            {/* <th rowSpan={2} className={styles.th}>AQI</th> AQI column fixed */}
-          </tr>
-          <tr className={styles.tr}>
-            {/* Temperature */}
-            <th className={styles.th}>T. Max</th>
-            <th className={styles.th}>T. Min</th>
-            <th className={styles.th}>Media</th>
-
-            {/* Pressure */}
-            <th className={styles.th}>Press. Max</th>
-            <th className={styles.th}>Press. Min</th>
-
-            {/* Humidity */}
-            <th className={styles.th}>UR Max</th>
-            <th className={styles.th}>UR Min</th>
-
-            {/* Wind */}
-            <th className={styles.th}>Raffica Max</th>
-            <th className={styles.th}>Vento Medio</th>
-            <th className={styles.th}>Dir Vento (°)</th>
-
-            {/* UV & Solar Radiation */}
-            <th className={styles.th}>UV Max</th>
-            <th className={styles.th}>W/m²</th>
-
-            {/* PM2.5 */}
-            <th className={styles.th}>Min</th>
-            <th className={styles.th}>Max</th>
-            <th className={styles.th}>Medio</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.length > 0 ? (
-            filteredData.map((data) => (
-              <tr key={data.id} className={styles.tr}>
-                {/* Date */}
-                <td className={styles.td}>
-                  {`${data.year}-${data.month.toString().padStart(2, '0')}-${data.day.toString().padStart(2, '0')}`}
-                </td>
-
-                {/* Temperature */}
-                <td className={styles.td}>{data.tempHigh}</td>
-                <td className={styles.td}>{data.tempLow}</td>
-                <td className={styles.td}>{data.tempAvg}</td>
-
-                {/* Pressure */}
-                <td className={styles.td}>{data.pressureMax}</td>
-                <td className={styles.td}>{data.pressureMin}</td>
-
-                {/* Humidity */}
-                <td className={styles.td}>{data.humidityHigh}</td>
-                <td className={styles.td}>{data.humidityLow}</td>
-
-                {/* Wind */}
-                <td className={styles.td}>{data.windgustHigh}</td>
-                <td className={styles.td}>{data.windspeedAvg}</td>
-                <td className={styles.td}>{data.winddirAvg}</td>
-
-                {/* UV & Solar Radiation */}
-                <td className={styles.td}>{data.uvHigh}</td>
-                <td className={styles.td}>{data.solarRadiationHigh}</td>
-
-                {/* PM2.5 */}
-                <td className={styles.td}>{data.pm25Min}</td>
-                <td className={styles.td}>{data.pm25Max}</td>
-                <td className={styles.td}>{data.pm25Avg}</td>
-
-                {/* Pioggia */}
-                <td className={styles.td}>{data.precipTotal}</td>
-
-                {/* AQI */}
-                {/* <td className={styles.td}>{data.aqi}</td> */}
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={18} className={styles.noDataMessage}>
-                No data available for the selected filters.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-
-
-
-      {/* Show More Button */}
-      {!showAll && weatherData.length > 100 && (
-        <button onClick={() => setShowAll(true)} className={styles.toggleButton}>
-          Show More
-        </button>
+      {loading ? (
+        <p className={styles.loadingMessage}>Caricamento dati...</p>
+      ) : weatherData.length > 0 ? (
+        <div className={styles.widgetsContainer}>
+          {weatherData.map((data) => (
+            <div key={data.id} className={styles.widgetWrapper}>
+              <WeatherWidget data={data} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className={styles.noDataMessage}>Nessun dato disponibile per i filtri selezionati.</p>
       )}
     </div>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/weather`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/metadata`);
   if (!res.ok) {
-    return { props: { weatherData: [], years: [], months: [] } };
+    return { props: { years: [], months: [] } };
   }
 
-  const { weatherData, years, months } = await res.json();
+  const { years, months } = await res.json();
   return {
-    props: {
-      weatherData,
-      years,
-      months,
-    },
+    props: { years, months },
   };
 };
 
