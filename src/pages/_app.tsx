@@ -4,9 +4,18 @@ import '../../global.css'; // Your global CSS file
 import { WeatherNav } from '@/newComponents/Navbar';
 import styles from './app.module.css';
 
+import { Rubik } from 'next/font/google';
+
+// Configure Rubik font
+const rubik = Rubik({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  display: 'swap',
+});
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={styles.weatherPage}>
+    <div className={`${styles.weatherPage} ${rubik.className}`}>
       {/* <NavigationBar /> Include the NavigationBar at the top of every page */}
       <WeatherNav
       locationName="San Martino delle Scale"

@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
 
 .chartContainer {
-  font-family: 'Rubik', sans-serif;
   border-radius: 24px;
   background-color: white;
   box-shadow: 0px 10px 20px 0px rgba(9, 0, 63, 0.25);

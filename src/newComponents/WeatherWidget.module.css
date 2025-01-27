@@ -94,6 +94,13 @@
     line-height: 1;
     color: rgba(97, 97, 97, 1);
   }
+
+  .label{
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(97, 97, 97, 1);
+  }
   
   .minMaxValues {
     display: flex;

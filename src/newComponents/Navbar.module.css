@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
 
 .navbar {
     display: flex;
     align-items: center;
     letter-spacing: 0.2px;
     justify-content: space-between;
-    font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+
     /* position: fixed; */
     width: 100%;
-    max-width: 1100px;
+    max-width: 1020px;
   align-self: center;
   }
   

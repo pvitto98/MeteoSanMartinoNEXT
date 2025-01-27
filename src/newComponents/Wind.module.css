@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
 
 .weatherContainer {
-    font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+
     border-radius: 24px;
     background-color: white;
     box-shadow: 0px 10px 50px 0px rgba(9, 0, 63, 0.25);;

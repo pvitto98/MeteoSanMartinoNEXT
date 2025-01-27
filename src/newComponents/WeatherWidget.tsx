@@ -53,14 +53,15 @@ interface WeatherValueProps {
   maxValue?: number;
   minValue?: number;
   iconAlt: string;
+  label: string; // Add label property
 }
 
 function formatDate(dateString: string): string {
-  const year = dateString.slice(0, 4);
-  const month = dateString.slice(4, 6);
-  const day = dateString.slice(6, 8);
-  return `${day}/${month}/${year}`;
-}
+    const year = dateString.slice(0, 4);
+    const month = dateString.slice(4, 6);
+    const day = dateString.slice(6, 8);
+    return `${day}/${month}/${year}`;
+  }
 
 const WeatherValue: React.FC<WeatherValueProps> = ({
   icon,
@@ -68,17 +69,21 @@ const WeatherValue: React.FC<WeatherValueProps> = ({
   unit,
   maxValue,
   minValue,
-  iconAlt
+  iconAlt,
+  label // Add label to props
 }) => {
   return (
     <div className={styles.weatherValue}>
-      <img
+      {/* <img
         loading="lazy"
         src={icon}
         alt={iconAlt}
         className={styles.weatherIcon}
-      />
+      /> */}
+            <div className={styles.label}>{label}</div> {/* Add label display */}
+
       <div className={styles.valueContent}>
+
         <div className={styles.mainValue}>
           <span className={styles.value}>{value}</span>
           {unit && <span className={styles.unit}>{unit}</span>}
@@ -122,19 +127,22 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data }) => {
       unit: "°C",
       maxValue: data.tempHigh,
       minValue: data.tempLow,
-      iconAlt: "Temperature"
+      iconAlt: "Temperature",
+      label: "Temperatura" // Add label
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/72ea77f5474611c4884dcaec9b01fe05e22b7ee4a474e17f9be9459e72b5c232?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: data.windspeedAvg,
       unit: "km/h",
-      iconAlt: "Wind speed"
+      iconAlt: "Wind speed",
+      label: "Vento" // Add label
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/f4ad4f45d8ed908bf92639e0d2b0bd7ab61f4b258ac96e6233aeecead0b8770e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: data.precipTotal,
       unit: "mm",
-      iconAlt: "Rain amount"
+      iconAlt: "Rain amount",
+      label: "Pioggia" // Add label
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/122601393d3450f65774b81614cbc36d32c9a8ce81f40359a6484fd479acb7b4?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
@@ -142,29 +150,30 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data }) => {
       unit: "%",
       maxValue: Math.round(data.humidityHigh),
       minValue: Math.round(data.humidityLow),
-      iconAlt: "Humidity"
+      iconAlt: "Humidity",
+      label: "Umidità" // Add label
     }
   ];
 
   return (
     <section className={styles.dailyValue} aria-label="Weather information">
-      <header className={styles.header}>
-        <time className={styles.date}>
-          {formatDate(data.date)}
-        </time>
-        <button
-          className={styles.expandButton}
-          onClick={() => setShowSecondRow(!showSecondRow)}
-          aria-expanded={showSecondRow}
-          aria-label="Toggle additional weather information"
-        >
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/be407cfbd790fe1d3556beeff2f4163fd062cef6867f306436f364fa5e4e906d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-            alt=""
-            className={styles.expandIcon}
-          />
-        </button>
-      </header>
+<header className={styles.header}>
+  <time className={styles.date}>
+    {formatDate(data.date)}
+  </time>
+  <button
+    className={styles.expandButton}
+    onClick={() => setShowSecondRow(!showSecondRow)}
+    aria-expanded={showSecondRow}
+    aria-label="Toggle additional weather information"
+  >
+    <img
+      src="https://cdn.builder.io/api/v1/image/assets/TEMP/be407cfbd790fe1d3556beeff2f4163fd062cef6867f306436f364fa5e4e906d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
+      alt=""
+      className={styles.expandIcon}
+    />
+  </button>
+</header>
 
       <div className={styles.values}>
         <div className={styles.firstRow}>
@@ -177,41 +186,42 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data }) => {
               maxValue={item.maxValue}
               minValue={item.minValue}
               iconAlt={item.iconAlt}
+              label={item.label} // Add label
             />
           ))}
         </div>
 
-        <div
-  className={`${styles.secondRow} ${showSecondRow ? styles.show : ''}`}
->
-  {data.pm25Avg !== -1 && (
-    <WeatherValue
-      icon="https://cdn.builder.io/api/v1/image/assets/TEMP/26a58c8723c3b8428c9958df2d88d759413ec5a518e3844ffc6f31f92a70ee2b?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-      value={Math.round(data.pm25Avg)}
-      maxValue={data.pm25Max}
-      minValue={data.pm25Min}
-      iconAlt="Air quality"
-    />
-  )}
-  <WeatherValue
-    icon="https://cdn.builder.io/api/v1/image/assets/TEMP/8c5a0fbf90e628c7ccb81a4b45ccff61f0e5c5362add0cb6133ed8ceba20e71d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-    value={data.solarRadiationHigh}
-    unit="W/m²"
-    maxValue={Math.round(data.uvHigh)}
-    iconAlt="UV index"
-  />
-  <WeatherValue
-    icon="https://cdn.builder.io/api/v1/image/assets/TEMP/d57b4eba370a7a5fac59444757ebfac569aaf0f70b29a2075b9bf7235b1de63e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-    value={Math.round(data.pressureMax)}
-    unit="hPa"
-    maxValue={Math.round(data.pressureMax)}
-    minValue={Math.round(data.pressureMin)}
-    iconAlt="Pressure"
-  />
-</div>
-
-
-
+        {showSecondRow && (
+          <div className={styles.secondRow}>
+            {data.pm25Avg !== -1 && (
+              <WeatherValue
+                icon="https://cdn.builder.io/api/v1/image/assets/TEMP/26a58c8723c3b8428c9958df2d88d759413ec5a518e3844ffc6f31f92a70ee2b?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
+                value={Math.round(data.pm25Avg)}
+                maxValue={data.pm25Max}
+                minValue={data.pm25Min}
+                iconAlt="Air quality"
+                label="Qualità dell'aria" // Add label
+              />
+            )}
+            <WeatherValue
+              icon="https://cdn.builder.io/api/v1/image/assets/TEMP/8c5a0fbf90e628c7ccb81a4b45ccff61f0e5c5362add0cb6133ed8ceba20e71d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
+              value={data.solarRadiationHigh}
+              unit="W/m²"
+              maxValue={Math.round(data.uvHigh)}
+              iconAlt="UV index"
+              label="Indice UV" // Add label
+            />
+            <WeatherValue
+              icon="https://cdn.builder.io/api/v1/image/assets/TEMP/d57b4eba370a7a5fac59444757ebfac569aaf0f70b29a2075b9bf7235b1de63e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
+              value={Math.round(data.pressureMax)}
+              unit="hPa"
+              maxValue={Math.round(data.pressureMax)}
+              minValue={Math.round(data.pressureMin)}
+              iconAlt="Pressure"
+              label="Pressione" // Add label
+            />
+          </div>
+        )}
       </div>
     </section>
   );
