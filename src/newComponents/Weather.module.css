@@ -5,17 +5,18 @@
   background-color: rgba(138, 141, 147, 0.05);
   box-shadow: 0px 10px 20px 0px rgba(9, 0, 63, 0.25);;
   display: flex;
-  min-width: 300px;
+  min-width: 200px;
   width: 100%;
   flex-direction: column;
   justify-content: center;
   flex: 1;
   flex-basis: 50px;
   margin: auto 0;
-  padding: 20px 10px 30px;
+  padding: 20px 30px 30px;
   font-family: 'Rubik', sans-serif; /* Apply Rubik font */
   background-color: #C9E5FF;
   gap: 15px;
+  position: relative;
 }
 
 /* Add a night mode class for the section */
@@ -29,7 +30,7 @@
   align-self: center;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: start;
   width: 100%;
   text-align: center;
 }
@@ -120,7 +121,7 @@
   margin-top: 15px;
   width: 100%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .container {
@@ -161,8 +162,10 @@
 
 
 .weatherIconWrapper {
-  width: 100px;
-  height: 100px;
+  position: absolute;
+  right: 0;
+  width: 200px;
+  height: 200px;
   border-radius: 10px;
   background-size: 100%; /* Initial size before zoom */
   background-position: center;
@@ -184,7 +187,8 @@
   }
 
 .temperature{
-  min-width: 500px
+  min-width: 300px;
+  padding: 25px 50px;
 }
 
 .condition{
@@ -198,9 +202,9 @@
   font-size: 16px;
 }
 
-.mainContent{
+/* .mainContent{
   justify-content: space-around;
-}
+} */
 
 .value {
   font-size: 25px;
@@ -218,8 +222,8 @@
   }
 
   .weatherIconWrapper {
-    width: 150px;
-    height: 150px;
+    width: 250px;
+    height: 250px;
   }
   }
   

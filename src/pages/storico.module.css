@@ -121,6 +121,11 @@
   width: 100%;
 }
 
+.specialWeatherWidget {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+  border: 1px solid rgba(0, 123, 255, 0.3); /* Blue border */
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .th, .td {

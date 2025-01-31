@@ -1,0 +1,13 @@
+// middleware.ts
+// import { NextResponse } from 'next/server';
+
+// export function middleware(req: Request) {
+//   const analyticsConsent = req.cookies.get('analytics-consent')?.value;
+
+//   // Custom logic based on cookie value
+//   if (!analyticsConsent) {
+//     console.log('User has not set consent yet.');
+//   }
+
+//   return NextResponse.next();
+// }

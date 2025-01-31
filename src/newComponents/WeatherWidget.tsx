@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './WeatherWidget.module.css';
 
 interface WeatherWidgetProps {
   data: WeatherData;
+  isSpecial?: boolean; // Add isSpecial prop
 }
 
 export interface WeatherData {
@@ -54,14 +55,16 @@ interface WeatherValueProps {
   minValue?: number;
   iconAlt: string;
   label: string; // Add label property
+  maxLabel?: string; // Add maxLabel property
+  minLabel?: string; // Add minLabel property
 }
 
 function formatDate(dateString: string): string {
-    const year = dateString.slice(0, 4);
-    const month = dateString.slice(4, 6);
-    const day = dateString.slice(6, 8);
-    return `${day}/${month}/${year}`;
-  }
+  const year = dateString.slice(0, 4);
+  const month = dateString.slice(4, 6);
+  const day = dateString.slice(6, 8);
+  return `${day}/${month}/${year}`;
+}
 
 const WeatherValue: React.FC<WeatherValueProps> = ({
   icon,
@@ -70,17 +73,19 @@ const WeatherValue: React.FC<WeatherValueProps> = ({
   maxValue,
   minValue,
   iconAlt,
-  label // Add label to props
+  label,
+  maxLabel = "max", // Default to "max" if not provided
+  minLabel = "min"  // Default to "min" if not provided
 }) => {
   return (
     <div className={styles.weatherValue}>
-      {/* <img
+      <img
         loading="lazy"
         src={icon}
         alt={iconAlt}
         className={styles.weatherIcon}
-      /> */}
-            <div className={styles.label}>{label}</div> {/* Add label display */}
+      />
+      <div className={styles.label}>{label}</div> {/* Add label display */}
 
       <div className={styles.valueContent}>
 
@@ -92,22 +97,24 @@ const WeatherValue: React.FC<WeatherValueProps> = ({
           <div className={styles.minMaxValues}>
             {maxValue && (
               <div className={styles.maxValue}>
-                <img
+                {/* <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/7e46bad1993f1ca829c95a86eaeccb082dba3569bf577b9c5ac0397f8d2e6d09?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
                   alt=""
                   className={styles.minMaxIcon}
-                />
+                /> */}
                 <span>{maxValue}</span>
+                <span className={styles.minMaxLabel}>{maxLabel}</span> {/* Use maxLabel */}
               </div>
             )}
             {minValue && (
               <div className={styles.minValue}>
-                <img
+                {/* <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/ac9a20984761c75044f4a8ccf2a548950fc5da1479576d0b8c25221a9a9a4d65?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
                   alt=""
                   className={styles.minMaxIcon}
-                />
+                /> */}
                 <span>{minValue}</span>
+                <span className={styles.minMaxLabel}>{minLabel}</span> {/* Use minLabel */}
               </div>
             )}
           </div>
@@ -117,8 +124,14 @@ const WeatherValue: React.FC<WeatherValueProps> = ({
   );
 };
 
-export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data }) => {
+export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data, isSpecial }) => {
   const [showSecondRow, setShowSecondRow] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth >= 1024) {
+      setShowSecondRow(true);
+    }
+  }, []);
 
   const weatherValues = [
     {
@@ -128,14 +141,16 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data }) => {
       maxValue: data.tempHigh,
       minValue: data.tempLow,
       iconAlt: "Temperature",
-      label: "Temperatura" // Add label
+      label: "Temperatura", // Add label
+      maxLabel: "Max", // Add maxLabel
+      minLabel: "Min"  // Add minLabel
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/72ea77f5474611c4884dcaec9b01fe05e22b7ee4a474e17f9be9459e72b5c232?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: data.windspeedAvg,
       unit: "km/h",
       iconAlt: "Wind speed",
-      label: "Vento" // Add label
+      label: "Raffica di Vento" // Add label
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/f4ad4f45d8ed908bf92639e0d2b0bd7ab61f4b258ac96e6233aeecead0b8770e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
@@ -151,29 +166,66 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data }) => {
       maxValue: Math.round(data.humidityHigh),
       minValue: Math.round(data.humidityLow),
       iconAlt: "Humidity",
-      label: "Umidità" // Add label
+      label: "Umidità", // Add label
+      maxLabel: "Max", // Add maxLabel
+      minLabel: "Min"  // Add minLabel
+    }
+  ];
+
+  const secondRowValues = [
+    {
+      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/26a58c8723c3b8428c9958df2d88d759413ec5a518e3844ffc6f31f92a70ee2b?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
+      value: Math.round(data.pm25Avg),
+      maxValue: data.pm25Max,
+      minValue: data.pm25Min,
+      iconAlt: "Air quality",
+      label: "Qualità dell'aria",
+      maxLabel: "Max", // Add maxLabel
+      minLabel: "Min"  // Add minLabel
+    },
+    {
+      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/8c5a0fbf90e628c7ccb81a4b45ccff61f0e5c5362add0cb6133ed8ceba20e71d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
+      value: Math.round(data.uvHigh),
+      maxValue: data.solarRadiationHigh,
+      iconAlt: "UV index",
+      label: "Indice UV",
+      maxLabel: "Rad Sol." // Add maxLabel
+    },
+    {
+      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d57b4eba370a7a5fac59444757ebfac569aaf0f70b29a2075b9bf7235b1de63e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
+      value: Math.round(data.pressureMax),
+      unit: "hPa",
+      maxValue: Math.round(data.pressureMax),
+      minValue: Math.round(data.pressureMin),
+      iconAlt: "Pressure",
+      label: "Pressione",
+      maxLabel: "Max", // Add maxLabel
+      minLabel: "Min"  // Add minLabel
     }
   ];
 
   return (
-    <section className={styles.dailyValue} aria-label="Weather information">
-<header className={styles.header}>
-  <time className={styles.date}>
-    {formatDate(data.date)}
-  </time>
-  <button
-    className={styles.expandButton}
-    onClick={() => setShowSecondRow(!showSecondRow)}
-    aria-expanded={showSecondRow}
-    aria-label="Toggle additional weather information"
-  >
-    <img
-      src="https://cdn.builder.io/api/v1/image/assets/TEMP/be407cfbd790fe1d3556beeff2f4163fd062cef6867f306436f364fa5e4e906d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-      alt=""
-      className={styles.expandIcon}
-    />
-  </button>
-</header>
+    <section
+      className={`${styles.dailyValue} ${isSpecial ? styles.specialWeatherWidget : ''}`}
+      aria-label="Weather information"
+    >
+      <header className={styles.header}>
+        <time className={styles.date}>
+          {isSpecial ? "Riassunto" : formatDate(data.date)}
+        </time>
+        <button
+          className={styles.expandButton}
+          onClick={() => setShowSecondRow(!showSecondRow)}
+          aria-expanded={showSecondRow}
+          aria-label="Toggle additional weather information"
+        >
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/be407cfbd790fe1d3556beeff2f4163fd062cef6867f306436f364fa5e4e906d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
+            alt=""
+            className={styles.expandIcon}
+          />
+        </button>
+      </header>
 
       <div className={styles.values}>
         <div className={styles.firstRow}>
@@ -187,41 +239,25 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data }) => {
               minValue={item.minValue}
               iconAlt={item.iconAlt}
               label={item.label} // Add label
+              maxLabel={item.maxLabel} // Add maxLabel
+              minLabel={item.minLabel} // Add minLabel
+            />
+          ))}
+          {showSecondRow && secondRowValues.map((item, index) => (
+            <WeatherValue
+              key={index}
+              icon={item.icon}
+              value={item.value}
+              unit={item.unit}
+              maxValue={item.maxValue}
+              minValue={item.minValue}
+              iconAlt={item.iconAlt}
+              label={item.label}
+              maxLabel={item.maxLabel} // Add maxLabel
+              minLabel={item.minLabel} // Add minLabel
             />
           ))}
         </div>
-
-        {showSecondRow && (
-          <div className={styles.secondRow}>
-            {data.pm25Avg !== -1 && (
-              <WeatherValue
-                icon="https://cdn.builder.io/api/v1/image/assets/TEMP/26a58c8723c3b8428c9958df2d88d759413ec5a518e3844ffc6f31f92a70ee2b?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-                value={Math.round(data.pm25Avg)}
-                maxValue={data.pm25Max}
-                minValue={data.pm25Min}
-                iconAlt="Air quality"
-                label="Qualità dell'aria" // Add label
-              />
-            )}
-            <WeatherValue
-              icon="https://cdn.builder.io/api/v1/image/assets/TEMP/8c5a0fbf90e628c7ccb81a4b45ccff61f0e5c5362add0cb6133ed8ceba20e71d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-              value={data.solarRadiationHigh}
-              unit="W/m²"
-              maxValue={Math.round(data.uvHigh)}
-              iconAlt="UV index"
-              label="Indice UV" // Add label
-            />
-            <WeatherValue
-              icon="https://cdn.builder.io/api/v1/image/assets/TEMP/d57b4eba370a7a5fac59444757ebfac569aaf0f70b29a2075b9bf7235b1de63e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-              value={Math.round(data.pressureMax)}
-              unit="hPa"
-              maxValue={Math.round(data.pressureMax)}
-              minValue={Math.round(data.pressureMin)}
-              iconAlt="Pressure"
-              label="Pressione" // Add label
-            />
-          </div>
-        )}
       </div>
     </section>
   );

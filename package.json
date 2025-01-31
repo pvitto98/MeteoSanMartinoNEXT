@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
-},
+  },
   "dependencies": {
     "@prisma/client": "^6.1.0",
     "axios": "^1.7.9",
@@ -15,7 +15,9 @@
     "next": "15.1.2",
     "node-fetch": "^3.3.2",
     "react": "^19.0.0",
+    "react-cookie-consent": "^9.0.0",
     "react-dom": "^19.0.0",
+    "react-ga4": "^2.1.0",
     "react-leaflet": "^5.0.0"
   },
   "devDependencies": {

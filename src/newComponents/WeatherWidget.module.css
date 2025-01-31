@@ -40,7 +40,8 @@
     flex-direction: column;
     gap: 20px;
     justify-self: center;
-
+width: 100%;
+align-items: center;
   }
   
   .firstRow,
@@ -50,17 +51,25 @@
     align-items: start;
     min-width: 300px;
     max-width: 500px;
+    width: 79%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    row-gap: 20px;
   }
 
   .secondRow {
     display: none;
+  }
+
+  .secondRow.show {
+    display: flex;
   }
   
   .weatherValue {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 50px;
+    min-width: 80px;
   }
   
   .weatherIcon {
@@ -100,22 +109,27 @@
     font-weight: 300;
     line-height: 1;
     color: rgba(97, 97, 97, 1);
+    margin-top: 7px;
   }
   
   .minMaxValues {
     display: flex;
+    flex-direction: row; /* Change to column to stack image and text */
+    align-items: center; /* Center align items */
     gap: 5px;
     margin-top: 5px;
     font-size: 10px;
     color: rgba(117, 117, 117, 1);
     font-weight: 400;
     letter-spacing: 0.14px;
+    place-content: center;
   }
   
   .maxValue,
   .minValue {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Change to column to stack image and text */
+    align-items: center; /* Center align items */
     gap: 2px;
   }
   
@@ -124,9 +138,23 @@
     height: 10px;
   }
 
+  .minMaxLabel {
+    font-size: 8px; /* Smaller font size for the label */
+    color: rgba(117, 117, 117, 1);
+    font-weight: 400;
+    letter-spacing: 0.14px;
+    text-align: center; /* Center align text */
+  }
+
   /* Force the second row to be shown when toggled, even on mobile */
 .secondRow.show {
   display: flex;
+}
+
+.specialWeatherWidget {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+  border: 1px solid rgba(0, 123, 255, 0.3); /* Blue border */
+  margin-bottom: 30px;
 }
   
   @media (max-width: 1200px) {
@@ -138,24 +166,31 @@
   @media screen and (min-width: 1024px) {
     .dailyValue {
       min-width: 800px;
-      
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     .firstRow,
     .secondRow {
       display: flex;
-      justify-content: center;
-      gap:50px;
+      justify-content: space-between;
+      gap:20px;
       max-width: none;
+      width: 100%;
     }
 
     .values{
       flex-direction: row;
       gap: 50px;
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
     }
 
     .secondRow {
-      display: flex;
+      display: flex; /* Display second row by default */
     }
 
     .expandButton{
@@ -172,3 +207,13 @@
     }
 
   }
+
+  @media screen and (min-width: 450px) {
+    /* .firstRow,
+    .secondRow {
+      width: 79%;
+    } */
+  }
+
+
+
