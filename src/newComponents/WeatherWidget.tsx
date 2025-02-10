@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './WeatherWidget.module.css';
+import { getCardinalDirection } from "@/utils/directionUtils";
 
 interface WeatherWidgetProps {
   data: WeatherData;
@@ -51,8 +52,8 @@ interface WeatherValueProps {
   icon: string;
   value: number | string;
   unit?: string;
-  maxValue?: number;
-  minValue?: number;
+  maxValue?: number|string;
+  minValue?: number|string;
   iconAlt: string;
   label: string; // Add label property
   maxLabel?: string; // Add maxLabel property
@@ -138,19 +139,23 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data, isSpecial })
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/436978b5d21373206bc87b78e9c8cba073d89caab428c0881e6450a0a9c4cd5d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: data.tempAvg,
       unit: "°C",
-      maxValue: data.tempHigh,
-      minValue: data.tempLow,
+      maxValue: data.tempLow,
+      minValue: data.tempHigh,
       iconAlt: "Temperature",
       label: "Temperatura", // Add label
-      maxLabel: "Max", // Add maxLabel
-      minLabel: "Min"  // Add minLabel
+      maxLabel: "Min", // Add maxLabel
+      minLabel: "Max"  // Add minLabel
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/72ea77f5474611c4884dcaec9b01fe05e22b7ee4a474e17f9be9459e72b5c232?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: data.windspeedAvg,
       unit: "km/h",
       iconAlt: "Wind speed",
-      label: "Raffica di Vento" // Add label
+      label: "Vento", // Add label
+      maxValue: getCardinalDirection(data.winddirAvg),
+      minValue: Math.round(data.windgustHigh),
+      maxLabel: "Dir.", // Add maxLabel
+      minLabel: "Raffica"  // Add minLabel
     },
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/f4ad4f45d8ed908bf92639e0d2b0bd7ab61f4b258ac96e6233aeecead0b8770e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
@@ -158,49 +163,49 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data, isSpecial })
       unit: "mm",
       iconAlt: "Rain amount",
       label: "Pioggia" // Add label
-    },
-    {
-      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/122601393d3450f65774b81614cbc36d32c9a8ce81f40359a6484fd479acb7b4?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
-      value: Math.round(data.humidityAvg),
-      unit: "%",
-      maxValue: Math.round(data.humidityHigh),
-      minValue: Math.round(data.humidityLow),
-      iconAlt: "Humidity",
-      label: "Umidità", // Add label
-      maxLabel: "Max", // Add maxLabel
-      minLabel: "Min"  // Add minLabel
     }
   ];
 
   const secondRowValues = [
     {
+      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/122601393d3450f65774b81614cbc36d32c9a8ce81f40359a6484fd479acb7b4?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
+      value: Math.round(data.humidityAvg),
+      unit: "%",
+      maxValue: Math.round(data.humidityLow),
+      minValue: Math.round(data.humidityHigh),
+      iconAlt: "Humidity",
+      label: "Umidità", // Add label
+      maxLabel: "Min", // Add maxLabel
+      minLabel: "Max"  // Add minLabel
+    },
+    ...(data.pm25Avg !== -1 ? [{
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/26a58c8723c3b8428c9958df2d88d759413ec5a518e3844ffc6f31f92a70ee2b?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: Math.round(data.pm25Avg),
-      maxValue: data.pm25Max,
-      minValue: data.pm25Min,
+      maxValue: data.pm25Min,
+      minValue: data.pm25Max,
       iconAlt: "Air quality",
       label: "Qualità dell'aria",
-      maxLabel: "Max", // Add maxLabel
-      minLabel: "Min"  // Add minLabel
-    },
-    {
+      maxLabel: "Min", // Add maxLabel
+      minLabel: "Max"  // Add minLabel
+    }] : []),
+    ...(data.uvHigh !== -1 ? [{
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/8c5a0fbf90e628c7ccb81a4b45ccff61f0e5c5362add0cb6133ed8ceba20e71d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: Math.round(data.uvHigh),
       maxValue: data.solarRadiationHigh,
       iconAlt: "UV index",
       label: "Indice UV",
-      maxLabel: "Rad Sol." // Add maxLabel
-    },
+      maxLabel: "Rad Sol."
+    }] : []),
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d57b4eba370a7a5fac59444757ebfac569aaf0f70b29a2075b9bf7235b1de63e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
       value: Math.round(data.pressureMax),
       unit: "hPa",
-      maxValue: Math.round(data.pressureMax),
-      minValue: Math.round(data.pressureMin),
+      maxValue: Math.round(data.pressureMin),
+      minValue: Math.round(data.pressureMax),
       iconAlt: "Pressure",
       label: "Pressione",
-      maxLabel: "Max", // Add maxLabel
-      minLabel: "Min"  // Add minLabel
+      maxLabel: "Min", // Add maxLabel
+      minLabel: "Max"  // Add minLabel
     }
   ];
 

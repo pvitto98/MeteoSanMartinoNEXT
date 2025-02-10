@@ -3,26 +3,15 @@
 // pages/index.tsx
 import { useEffect, useState } from "react";
 // import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/newComponents/LoadingSpinner";
 import styles from "./index.module.css";
-import { WeatherForecast } from "@/components/WeatherForecaster";
 import { Rainfall } from "@/newComponents/Rainfall";
 import { WeatherStats } from "@/newComponents/Wind";
 import { UVStats } from "@/newComponents/UV";
 import { AirQuality } from "@/newComponents/AirQuality";
 import { WeatherCard } from "@/newComponents/Weather";
-import { WeatherWidget } from "@/newComponents/WeatherWidget";
-import TemperatureChart from "@/newComponents/TemperatureChart";
 
-// Dynamically import heavy components
-// const TemperatureChart = dynamic(() => import("@/components/TemperatureChart"));
-const Temperature = dynamic(() => import("@/components/Temperature"));
-// const Pioggia = dynamic(() => import("@/components/Pioggia"));
-// const Fulmini = dynamic(() => import("@/components/Fulmini"));
-const PM25 = dynamic(() => import("@/components/PM25"));
-const UVPyramid = dynamic(() => import("@/components/UVPyramid"));
-const WindDirection = dynamic(() => import("@/components/WindDirection"));
+
 
 
 interface TimedValue {

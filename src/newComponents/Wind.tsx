@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Wind.module.css';
-import WindDirection from '@/components/WindDirection';
+import WindDirection from '@/newComponents/WindDirection';
 
 export interface WeatherStatProps {
   icon: string;

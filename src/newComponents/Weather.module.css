@@ -17,6 +17,7 @@
   background-color: #C9E5FF;
   gap: 15px;
   position: relative;
+  overflow: hidden;
 }
 
 /* Add a night mode class for the section */
@@ -163,7 +164,7 @@
 
 .weatherIconWrapper {
   position: absolute;
-  right: 0;
+  right: -10%;
   width: 200px;
   height: 200px;
   border-radius: 10px;
@@ -224,6 +225,7 @@
   .weatherIconWrapper {
     width: 250px;
     height: 250px;
+    right: 0;
   }
   }
   

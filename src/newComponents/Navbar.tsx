@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
-import Drawer from '@/components/Drawer';
+import Drawer from '@/newComponents/Drawer';
 
 
 

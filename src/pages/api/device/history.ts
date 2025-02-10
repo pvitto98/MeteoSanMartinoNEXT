@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
 
+
     // Return Ecowitt API response to the client
     res.status(200).json(response.data);
   } catch (error) {

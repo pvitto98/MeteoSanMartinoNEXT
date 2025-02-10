@@ -142,7 +142,7 @@ export const WeatherCard: React.FC<TemperatureType> = ({
   pressure,
   rainRate,
   lightningCount,
-  uvSolar,
+  uvSolar
 }) => {
   const [animate, setAnimate] = useState(false);
 
@@ -188,8 +188,8 @@ export const WeatherCard: React.FC<TemperatureType> = ({
       <div className={styles.additionalValues}>
         {[
           { label: 'Dew Point', value: `${dewPoint}°C` },
-          { label: 'Humidity', value: `${humidity}%` },
-          { label: 'Pressure', value: `${pressure} hPa` },
+          { label: 'Umidità', value: `${humidity}%` },
+          { label: 'Pressione', value: `${pressure} hPa` },
         ].map((item, index) => (
           <WeatherValue key={index} label={item.label} value={item.value} />
         ))}

@@ -166,6 +166,7 @@ const StoricoPage = ({ years, months }: StoricoProps) => {
       if (res.ok) {
         const { weatherData } = await res.json();
         setWeatherData(weatherData);
+        console.log(weatherData);
       } else {
         console.error('Failed to fetch weather data');
         setWeatherData([]);

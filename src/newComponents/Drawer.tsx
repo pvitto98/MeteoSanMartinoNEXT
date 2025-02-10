@@ -32,6 +32,9 @@ const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
         <Link href="/storico" className={styles.projects} onClick={onClose}>
           Storico
         </Link>
+        <Link href="/info" className={styles.projects} onClick={onClose}>
+          Info
+        </Link>
       </div>
       {onClose && (
         <button onClick={onClose} className={styles.closeButton}>
