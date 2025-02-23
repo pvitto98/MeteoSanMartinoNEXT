@@ -21,6 +21,7 @@ const InfoPage: React.FC = () => {
             <ul className={styles.list}>
                 <li><strong>Temperatura</strong> attuale e percepita</li>
                 <li><strong>Velocità e direzione del vento</strong></li>
+                <li><strong>Pressione atmosferica</strong></li>
                 <li><strong>Valori delle precipitazioni</strong> e storico mensile</li>
                 <li><strong>Indice UV</strong> e radiazione solare</li>
                 <li><strong>Qualità dell&rsquo;aria</strong> con valori PM2.5</li>
@@ -41,6 +42,11 @@ const InfoPage: React.FC = () => {
             <div className={styles.buttonContainer}>
                 <a href="https://vittoriopellittieri.com/" target="_blank" className={styles.portfolioButton}>
                     Visita il mio portfolio
+                </a>
+            </div>
+            <div className={styles.buttonContainer}>
+                <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" target="_blank" className={styles.donateButton}>
+                    Dona con PayPal
                 </a>
             </div>
         </div>

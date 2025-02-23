@@ -164,9 +164,9 @@
 
 .weatherIconWrapper {
   position: absolute;
-  right: -10%;
-  width: 200px;
-  height: 200px;
+  right: -5%;
+  width: 150px;
+  height: 150px;
   border-radius: 10px;
   background-size: 100%; /* Initial size before zoom */
   background-position: center;
@@ -223,8 +223,8 @@
   }
 
   .weatherIconWrapper {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     right: 0;
   }
   }
