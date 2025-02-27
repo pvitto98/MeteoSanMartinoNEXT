@@ -1,5 +1,5 @@
-import { FunctionComponent, useState } from "react";
-import Link from "next/link"; // Import Next.js Link
+import { FunctionComponent, useEffect, useState } from "react";
+import Link from "next/link";
 import styles from "./Drawer.module.css";
 
 export type DrawerType = {
@@ -7,12 +7,56 @@ export type DrawerType = {
   onClose?: () => void;
 };
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => void;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
 const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
+  const [showInstall, setShowInstall] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as unknown as BeforeInstallPromptEvent);
+      setShowInstall(true);
+    };
+    
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      console.log("beforeinstallprompt fired!"); // ✅ Debugging
+    });
+  }, []);
+  
+
+  const handleInstallClick = async () => {
+    console.log("Install button clicked"); // ✅ Debugging
+    console.log(deferredPrompt); // ✅ Debugging
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the install prompt");
+      }
+      setDeferredPrompt(null);
+      setShowInstall(false);
+    }
+  };
+  
   const handleLogoClick = () => {
     setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 300); // Reset after animation
+    setTimeout(() => setIsClicked(false), 300);
   };
 
   return (
@@ -25,7 +69,6 @@ const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
         />
       </div>
       <div className={styles.links}>
-        {/* Remove the <a> tag and pass href directly to Link */}
         <Link href="/" className={styles.pvitto} onClick={onClose}>
           Dashboard
         </Link>
@@ -35,6 +78,11 @@ const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
         <Link href="/info" className={styles.projects} onClick={onClose}>
           Info
         </Link>
+        {showInstall && (
+          <button className={styles.installButton} onClick={handleInstallClick}>
+            ➕ Add to Home Screen
+          </button>
+        )}
       </div>
       {onClose && (
         <button onClick={onClose} className={styles.closeButton}>

@@ -36,7 +36,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className={`${styles.weatherPage} ${rubik.className}`}>
       <Head>
         <title>San Martino Weather</title>
-        <link rel="icon" href="/favicon.ico" />
+        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="manifest" href="/manifest.json" />
+
       </Head>
       {/* Load the Google Analytics script */}
       <Script
