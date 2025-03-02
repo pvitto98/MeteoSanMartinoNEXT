@@ -78,11 +78,7 @@ const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
         <Link href="/info" className={styles.projects} onClick={onClose}>
           Info
         </Link>
-        {showInstall && (
-          <button className={styles.installButton} onClick={handleInstallClick}>
-            ➕ Add to Home Screen
-          </button>
-        )}
+
       </div>
       {onClose && (
         <button onClick={onClose} className={styles.closeButton}>
@@ -92,5 +88,11 @@ const Drawer: FunctionComponent<DrawerType> = ({ className = "", onClose }) => {
     </div>
   );
 };
+
+// {showInstall && (
+//   <button className={styles.installButton} onClick={handleInstallClick}>
+//     ➕ Add to Home Screen
+//   </button>
+// )}
 
 export default Drawer;

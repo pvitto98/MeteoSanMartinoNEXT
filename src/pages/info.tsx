@@ -45,7 +45,7 @@ const InfoPage: React.FC = () => {
                 </a>
             </div>
             <div className={styles.buttonContainer}>
-                <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" target="_blank" className={styles.donateButton}>
+                <a href="https://www.paypal.me/PietroPPellittieri" target="_blank" className={styles.donateButton}>
                     Dona con PayPal
                 </a>
             </div>

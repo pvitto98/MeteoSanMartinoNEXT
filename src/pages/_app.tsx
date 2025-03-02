@@ -11,6 +11,7 @@ import { WeatherNav } from "@/newComponents/Navbar";
 import ConsentBanner from "@/newComponents/ConsentBanner";
 import * as gtag from "../lib/gtag";
 import Head from "next/head";
+import '../styles/globals.css';
 
 const rubik = Rubik({
   subsets: ["latin"],

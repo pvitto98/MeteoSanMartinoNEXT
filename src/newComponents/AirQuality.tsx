@@ -19,6 +19,7 @@ const AirQualityMetric: React.FC<AirQualityMetricProps> = ({
   label,
   unit
 }) => {
+  const isSmallFont = value === "Molto buona" || value === "Molto inquinata";
   return (
     <div className={styles.metric} role="group" aria-label={`${label} measurement`}>
       <img
@@ -28,7 +29,7 @@ const AirQualityMetric: React.FC<AirQualityMetricProps> = ({
         alt=""
       />
       <div className={styles.metricContent}>
-        <div className={styles.metricValue}>
+        <div className={`${styles.metricValue} ${isSmallFont ? styles.small : ''}`}>
           {value}{unit}
         </div>
         <div className={styles.metricLabel}>
