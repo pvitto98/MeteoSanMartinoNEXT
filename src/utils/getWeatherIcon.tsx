@@ -5,8 +5,6 @@ export const getWeatherIcon = (
     lastLightningTime: string | null
   ): { icon: string; condition: string } => {
 
-    console.log ("rainRate: " + rainRate);
-    console.log ("pressure: " + pressure);
     const currentTime = new Date();
     const lightningThresholdMinutes = 30;
   

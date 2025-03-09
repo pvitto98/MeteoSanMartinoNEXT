@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { generateWeatherImage } from '../../utils/generateWeatherImage';
+import { generateWeatherImage2 } from '../../utils/generateWeatherImage';
 import { getWeatherIcon } from '../../utils/getWeatherIcon';
 
 const calculateAverage = (values: number[]) => {
@@ -119,7 +119,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   
 
     // Generate the weather image
-    const buffer = await generateWeatherImage({
+    const buffer = await generateWeatherImage2({
       date: displayDate,
       tempMax: parseFloat(tempMax),
       tempMin: parseFloat(tempMin),
