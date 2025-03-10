@@ -3,7 +3,7 @@
 
 /* Global table container styles */
 .tableContainer {
-  margin-top: 30px;
+  margin-top: 75px;
   width: 100%;
   border-radius: 8px;
   justify-items: center;
@@ -146,5 +146,9 @@
 
   .toggleButton {
     font-size: 14px;
+  }
+
+  .tableContainer{
+    margin-top: 100px;
   }
 }

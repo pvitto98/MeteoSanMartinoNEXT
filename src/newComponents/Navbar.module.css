@@ -1,18 +1,25 @@
-
-
 .navbar {
     display: flex;
     align-items: center;
     letter-spacing: 0.2px;
     justify-content: space-between;
 
-    /* position: fixed; */
+    position: fixed;
+    z-index: 100;
     width: 100%;
-    max-width: 1020px;
-  align-self: center;
-  }
-  
-  .header {
+    max-width: 700px;
+    align-self: center;
+    padding: 15px 10px 10px 10px;
+    background-color: rgba(242, 251, 255, 0.5); /* 50% transparency */
+    backdrop-filter: blur(10px); /* Add blur effect */
+    transition: box-shadow 0.3s ease; /* Add transition for smooth shadow effect */
+}
+
+.navbar.scrolled {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a softer shadow with a slight blur */
+}
+
+.header {
     align-self: stretch;
     display: flex;
     min-width: 240px;
@@ -20,23 +27,24 @@
     align-items: flex-start;
     flex: 1 0 0;
     margin: auto 0;
-  }
-  
-  .category {
+    margin-left: 20px;
+}
+
+.category {
     color: var(--neutrals-background-neturals-neutral-color-700, #757575);
     font-size: 12px;
     font-weight: 300;
-  }
-  
-  .locationName {
+}
+
+.locationName {
     color: rgba(97, 97, 97, 1);
     font-size: 18px;
     font-weight: 500;
     z-index: 10;
     margin: 0;
-  }
-  
-  .locationImage {
+}
+
+.locationImage {
     aspect-ratio: 1;
     object-fit: contain;
     object-position: center;
@@ -44,22 +52,26 @@
     border-radius: 50%;
     align-self: stretch;
     margin: auto 0;
-  }
+}
 
-  .icsharpMenu{
+.icsharpMenu {
     background: transparent;
     border-style: hidden;
-  }
+    margin-right: 20px;
+}
 
-  @media screen and (min-width: 768px) {
-
-  .category{
-    font-size: 14px;
-  }
-  .locationName{
-    font-size: 24px;
-  }
-  .locationImage{
-    width: 40px;
-  }
+@media screen and (min-width: 768px) {
+    .category {
+        font-size: 14px;
+    }
+    .locationName {
+        font-size: 24px;
+    }
+    .locationImage {
+        width: 40px;
+    }
+    .navbar {
+        max-width: 1020px;
+        padding: 25px 20px;
+    }
 }

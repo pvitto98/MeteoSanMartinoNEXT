@@ -98,7 +98,8 @@
   background-image: linear-gradient(120deg, #296399 45%, #ffffff 120%);
   -webkit-background-clip: text; /* Ensures the background is clipped to the text */
   background-clip: text; /* Standard property for compatibility */
-  color: transparent; /* Make the text color transparent so the gradient shows */  font-weight: 700;
+  color: transparent; /* Make the text color transparent so the gradient shows */
+    font-weight: 700;
   line-height: 1.1;
   text-align: start;
 }
@@ -164,9 +165,9 @@
 
 .weatherIconWrapper {
   position: absolute;
-  right: -5%;
-  width: 150px;
-  height: 150px;
+  right: 5%;
+  width: 130px;
+  height: 130px;
   border-radius: 10px;
   background-size: 100%; /* Initial size before zoom */
   background-position: center;

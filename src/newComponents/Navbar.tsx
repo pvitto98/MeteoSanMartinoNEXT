@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 import Drawer from '@/newComponents/Drawer';
 
-
-
 export interface LocationHeaderProps {
   locationName: string;
   category: string;
@@ -26,16 +24,26 @@ const LocationHeader: React.FC<LocationHeaderProps> = ({ locationName, category 
 
 export const WeatherNav: React.FC<WeatherNavProps> = ({ locationName, category, imageUrl }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const handleClick = () => {
-    setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 300); // Reset after animation
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (isDrawerOpen) {
@@ -46,7 +54,7 @@ export const WeatherNav: React.FC<WeatherNavProps> = ({ locationName, category, 
   }, [isDrawerOpen]);
 
   return (
-    <nav className={styles.navbar} role="navigation" aria-label="Weather navigation">
+    <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`} role="navigation" aria-label="Weather navigation">
       <LocationHeader
         locationName={locationName}
         category={category}
@@ -59,8 +67,7 @@ export const WeatherNav: React.FC<WeatherNavProps> = ({ locationName, category, 
           className={styles.locationImage}
           alt={`Weather conditions for ${locationName}`}
         />
-      </button>
-
+</button>
       {/* Only render the Drawer component when it's open */}
       {isDrawerOpen && <Drawer className={styles.drawer} onClose={toggleDrawer} />}
     </nav>
