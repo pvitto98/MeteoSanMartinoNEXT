@@ -89,31 +89,22 @@ const WeatherValue: React.FC<WeatherValueProps> = ({
       <div className={styles.label}>{label}</div> {/* Add label display */}
 
       <div className={styles.valueContent}>
-
-        <div className={styles.mainValue}>
-          <span className={styles.value}>{value}</span>
-          {unit && <span className={styles.unit}>{unit}</span>}
-        </div>
+        {label !== "Pressione" && (
+          <div className={styles.mainValue}>
+            <span className={styles.value}>{value}</span>
+            {unit && <span className={styles.unit}>{unit}</span>}
+          </div>
+        )}
         {(maxValue || minValue) && (
           <div className={styles.minMaxValues}>
             {maxValue && (
               <div className={styles.maxValue}>
-                {/* <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/7e46bad1993f1ca829c95a86eaeccb082dba3569bf577b9c5ac0397f8d2e6d09?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-                  alt=""
-                  className={styles.minMaxIcon}
-                /> */}
                 <span>{maxValue}</span>
                 <span className={styles.minMaxLabel}>{maxLabel}</span> {/* Use maxLabel */}
               </div>
             )}
             {minValue && (
               <div className={styles.minValue}>
-                {/* <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ac9a20984761c75044f4a8ccf2a548950fc5da1479576d0b8c25221a9a9a4d65?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-                  alt=""
-                  className={styles.minMaxIcon}
-                /> */}
                 <span>{minValue}</span>
                 <span className={styles.minMaxLabel}>{minLabel}</span> {/* Use minLabel */}
               </div>
@@ -198,8 +189,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data, isSpecial })
     }] : []),
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d57b4eba370a7a5fac59444757ebfac569aaf0f70b29a2075b9bf7235b1de63e?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
-      value: Math.round(data.pressureMax),
-      unit: "hPa",
+      value: -1,
       maxValue: Math.round(data.pressureMin),
       minValue: Math.round(data.pressureMax),
       iconAlt: "Pressure",
@@ -225,8 +215,8 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ data, isSpecial })
           aria-label="Toggle additional weather information"
         >
           <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/be407cfbd790fe1d3556beeff2f4163fd062cef6867f306436f364fa5e4e906d?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
-            alt=""
+            src='/plus.png'
+alt=""
             className={styles.expandIcon}
           />
         </button>

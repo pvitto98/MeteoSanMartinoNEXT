@@ -20,12 +20,11 @@
   left: 0;
   width: 100%;
   /* Full width */
-  height: 100%;
+  height: 100vh;
   /* Full height */
-  background-color: white;
+  background-color: #f2fbff;
   /* Background color */
-  z-index: 9999;
-  /* Ensure it's on top */
+  z-index: 101; /* Ensure it's above the navbar */
   overflow: hidden;
   /* Hide any overflow */
   display: flex;
