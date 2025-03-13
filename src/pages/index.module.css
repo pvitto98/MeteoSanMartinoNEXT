@@ -49,3 +49,10 @@
     margin-top: 100px;
   }
 }
+
+@media screen and (max-width: 768px) {
+
+  .weatherContent {
+    gap: 10px;
+  }
+}

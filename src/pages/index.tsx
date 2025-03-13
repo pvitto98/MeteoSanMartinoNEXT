@@ -10,6 +10,9 @@ import { WeatherStats } from "@/newComponents/Wind";
 import { UVStats } from "@/newComponents/UV";
 import { AirQuality } from "@/newComponents/AirQuality";
 import { WeatherCard } from "@/newComponents/Weather";
+import RainRateSpeedometer from "@/newComponents/RainRateSpeedometer";
+import RainBar from "@/newComponents/RainBar";
+import SolarRadiationChart from "@/newComponents/SolarRadiationChart";
 
 
 
@@ -94,8 +97,13 @@ interface DeviceData {
   sensor_array?: TimedValue;
 }
 
-
-
+interface DateValue {
+  date: string;  // Human-readable date
+  value: string; // The corresponding value (could be a number or string)
+}
+interface SolarRadiationChartProps {
+  data: { date: string, value: string }[]; // Transformed data with date and value
+}
 
 const Dashboard = () => {
   const [data, setData] = useState<DeviceData | null>(null);
@@ -103,7 +111,28 @@ const Dashboard = () => {
   // const [lightningData, setLightningData] = useState<LightningData["distance"]["list"] | null>(null);
   const [windData, setWindData] = useState<WindData | null>(null);
   const [currentDateTime, setCurrentDateTime] = useState(() => getCurrentDateTime());
+  const [solarData, setSolarDat] = useState<SolarRadiationChartProps | null>(null);
+  const solarRadiationData = {
+    1741820400: '0.0',
+    1741820700: '0.0',
+    1741821000: '0.0',
+    // ... more data
+    1741849500: '267.2',
+    1741849800: '246.8',
+    1741850100: '77.2',
+  };
+
+  
   // const router = useRouter();
+
+  // Function to convert the object to an array of {date, value}
+function transformData(data: DeviceData): DateValue[] {
+  return Object.entries(data).map(([timestamp, value]) => {
+    const date = new Date(parseInt(timestamp) * 1000).toLocaleString(); // Convert timestamp to date string
+    return { date, value };
+  });
+}
+
 
   useEffect(() => {
     const fetchTemperatureData = async () => {
@@ -114,7 +143,9 @@ const Dashboard = () => {
       try {
         const response = await fetch(`/api/device/history?start_date=${startDate}&end_date=${endDate}`);
         const result = await response.json();
-
+        console.log("response:");
+        console.log(result.data.solar_and_uvi.solar.list);
+        console.log(transformData(result.data.solar_and_uvi.solar.list));
         setTemperatureData(result.data.outdoor);
         // setLightningData(result.data.lightning?.distance.list);
         setWindData({
@@ -122,6 +153,7 @@ const Dashboard = () => {
           wind_direction: result.data.wind.wind_direction,
           wind_gust: result.data.wind.wind_gust,
         });
+        setSolarDat({data: transformData(result.data.solar_and_uvi.solar.list)});
       } catch (error) {
         console.error("Error fetching temperature data:", error);
       }
@@ -173,26 +205,32 @@ const Dashboard = () => {
   //   )
   // );
 
-  const getMostRecentLightning = (lightningData: Record<string, string>, currentDateTime: { day: string; time: string }) => {
+  const getMostRecentLightning = (lightningData: Record<string, string>) => {
     const currentTime = new Date();
     let recentLightning = null;
+    console.log("getMostRecentLightning");
   
-    Object.entries(lightningData).forEach(([time, value]) => {
+    for (const [time, value] of Object.entries(lightningData)) {
+      console.log("entry");
       const lightningTime = new Date(time);
+      console.log(time + lightningTime);
       const timeDifference = (currentTime.getTime() - lightningTime.getTime()) / (1000 * 60);
   
       if (timeDifference <= 30) {
         recentLightning = { time, value };
       }
-    });
-
+    }
   
     return recentLightning;
   };
 
-  const mostRecentLightning = getMostRecentLightning(lightning?.distance?.list || {}, currentDateTime);
+  console.log( lightning?.distance)
 
+  const mostRecentLightning = getMostRecentLightning(lightning?.distance?.list || {});
 
+  console.log("mostRecentLightning:" + mostRecentLightning);
+
+  console.log(lightning)
   const uvRisk = determineUVRisk(parseFloat(solar_and_uvi?.uvi.value ?? "0"));
 
   return (
@@ -209,6 +247,7 @@ windGust={parseFloat(wind?.wind_gust.value ?? "0")} />
       <UVStats uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} />
       <AirQuality  aqi={parseFloat(pm25_ch1?.real_time_aqi.value ?? "0")}  pm25={parseFloat(pm25_ch1?.pm25.value ?? "0")}/>
       {/* <TemperatureChart data={temperatureData}/> */}
+      {/* {solarData && <SolarRadiationChart data={solarData.data} />} */}
     </div>
   );
 };

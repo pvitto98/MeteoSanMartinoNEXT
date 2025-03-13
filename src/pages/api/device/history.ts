@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         temp_unitid: 1, // Temperature unit ID
         start_date,
         end_date,
-        call_back: "outdoor.temperature,outdoor.feels_like,outdoor.dew_point,lightning.distance,wind.wind_speed,wind.wind_direction",
+        call_back: "outdoor.temperature,outdoor.feels_like,outdoor.dew_point,lightning.distance,wind.wind_speed,wind.wind_direction,solar_and_uvi",
         cycle_type: "auto",
       },
     });

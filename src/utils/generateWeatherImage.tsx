@@ -156,4 +156,3 @@ export async function generateWeatherImage3({
 
   return canvas.toBuffer('image/png');
 }
-

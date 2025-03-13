@@ -73,6 +73,7 @@ export const WeatherCard: React.FC<TemperatureType> = ({
     ""
   );
 
+  console.log(lightningCount);
   return (
     <section
       className={`${styles.temperature} ${uvSolar === 0 ? styles.nightMode : ''}`}

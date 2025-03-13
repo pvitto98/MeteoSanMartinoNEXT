@@ -1,0 +1,17 @@
+.rain-rate-label {
+    margin-bottom: -10px; /* Equivalent to mt-2 */
+    font-size: 12px; /* Equivalent to text-sm */
+    color: #757575; /* Equivalent to text-gray-700 */
+    text-align: center; /* Equivalent to text-center */
+    font-style: italic; /* Equivalent to italic */
+    font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+}
+
+  .rain-rate {
+    margin-top: 0px; /* Equivalent to mt-2 */
+    font-size: 10px; /* Equivalent to text-sm */
+    color: #757575; /* Equivalent to text-gray-700 */
+    text-align: center; /* Equivalent to text-center */
+  }
+  
+  

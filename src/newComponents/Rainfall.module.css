@@ -27,10 +27,9 @@
   
   .metricsContainer {
     display: flex;
-    margin-top: 15px;
     width: 100%;
-    align-items: center;
-    justify-content: space-around;
+    align-items: end;
+    justify-content: space-evenly;
   }
   
   .metricContainer {
@@ -82,6 +81,13 @@
 
       }
 
+      .speedometerContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
 
       @media screen and (min-width: 768px) {
         .rainfallContainer {
@@ -109,10 +115,10 @@
       }
 
       
-@media screen and (min-width: 425px) {
+@media screen and (max-width: 425px) {
 
-  .rainfallContainer{
-    min-width: 350px;
+  .metricsContainer {
+    margin-top: 25px;
   }
   
   }

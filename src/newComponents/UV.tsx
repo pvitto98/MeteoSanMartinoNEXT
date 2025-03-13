@@ -7,6 +7,11 @@ export interface UVStatItemProps {
   label: string;
 }
 
+interface DateValue {
+  date: string;  // Human-readable date
+  value: string; // The corresponding value (could be a number or string)
+}
+
 export interface UVStatsProps {
   uvIndex: number;
   uvSolar: number;
