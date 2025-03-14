@@ -31,7 +31,7 @@
     display: flex;
     margin-top: 15px;
     width: 100%;
-    align-items: center;
+    align-items: end;
     justify-content: space-evenly;
   }
   
@@ -54,7 +54,7 @@
   
   .statContent {
     display: flex;
-    margin-top: 14px;
+    margin-top: 5px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -76,6 +76,12 @@
     font-weight: 400; /* Normal weight */
     margin-left: 2px; /* Add some space between value and unit */
   }
+
+  .uvContents{
+    display: flex;
+    flex-direction: row;
+  }
+  
 
   @media screen and (min-width: 768px) {
     .uvContainer {

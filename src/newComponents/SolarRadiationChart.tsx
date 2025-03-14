@@ -32,10 +32,11 @@ const SolarRadiationChart: React.FC<SolarRadiationChartProps> = ({ data }) => {
   const radiationValues = data.map(item => parseFloat(item.value));
   const timestamps = data.map(item => item.date);
 
-  // Find the sunrise index: first index where the value is exactly 0
+  // Find the sunrise index (first value > 0)
   const sunriseIndex = radiationValues.findIndex(value => value > 0);
+  const sunriseTime = sunriseIndex !== -1 ? timestamps[sunriseIndex] : null;
 
-  // Find the dawn index: the last index with a value > 0 that has at least one zero after it.
+  // Find the dawn index (last value > 0 followed by at least one zero)
   let dawnIndex = -1;
   for (let i = radiationValues.length - 1; i >= 0; i--) {
     if (radiationValues[i] > 0 && radiationValues.slice(i + 1).includes(0)) {
@@ -43,31 +44,22 @@ const SolarRadiationChart: React.FC<SolarRadiationChartProps> = ({ data }) => {
       break;
     }
   }
+  const dawnTime = dawnIndex !== -1 ? timestamps[dawnIndex] : null;
 
-  // Create filtered labels: only keep labels for sunrise and dawn; others are empty.
-  // For sunrise and dawn, we convert the timestamp to show "alba" and "tramonto" on separate lines from the time.
-  const filteredLabels = timestamps.map((timestamp, index) => {
-    if (index === sunriseIndex) {
-      const dateObj = new Date(timestamp);
-      return `alba\n${dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
-    }
-    if (index === dawnIndex) {
-      const dateObj = new Date(timestamp);
-      return `tramonto\n${dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
-    }
-    return '';
-  });
+  // Filter out zero values to clean up the graph
+  const filteredData = data.filter(item => parseFloat(item.value) > 0);
+  const filteredTimestamps = filteredData.map(item => item.date);
+  const filteredValues = filteredData.map(item => parseFloat(item.value));
 
   const chartData = {
-    labels: filteredLabels,
+    labels: filteredTimestamps,
     datasets: [
       {
         label: 'Solar Radiation (W/m²)',
-        data: radiationValues,
+        data: filteredValues,
         borderColor: '#757575',
-        backgroundColor: 'transparent',
-        fill: false,
-        tension: 0.5, // Increase tension for smoother curves
+        backgroundColor: '#757575', // Slightly transparent fill color
+        fill: "start", // Ensures the area below the line is filled
         borderWidth: 1,
         pointRadius: 0,
         pointBackgroundColor: '#757575'
@@ -91,24 +83,65 @@ const SolarRadiationChart: React.FC<SolarRadiationChartProps> = ({ data }) => {
     },
     scales: {
       x: {
-        type: 'category',
-        ticks: { autoSkip: false, maxRotation: 0, minRotation: 0 }, // Ensure labels are not tilted
+        display: false,
+        ticks: { autoSkip: false, maxRotation: 0, minRotation: 0 },
         grid: { display: false }
       },
       y: {
+        min: 0, // Ensures fill has a base reference point
         display: false,
         grid: { display: false },
         ticks: { display: false }
       }
-    
     }
   };
 
+  const formatTime = (time: string | null) => {
+    if (!time) return '--:--';
+
+    // Manually parse the time string
+    const [hours, minutes] = time.split(':');  // Assuming time is in "hh:mm" format
+  
+    return `${hours.padStart(2, '0').split(" ")[1]}:${minutes.padStart(2, '0')}`;
+  };
+
+
+  
   
 
   return (
-    <div style={{ width: '250px', height: '150px' }}>
-      <Line data={chartData} options={chartOptions} />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+      {/* Alba & Tramonto Box */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '130px',
+        border: '2px solid #ccc',
+        borderRadius: '5px',
+        padding: '5px',
+        fontSize: '10px',
+        color: '#757575',
+        textAlign: 'center'
+      }}>
+        <div style={{ flex: 1, borderRight: '1px solid #ccc' }}>
+          <strong>Alba</strong>
+          <br />
+          {formatTime(sunriseTime)}
+        </div>
+        <div style={{ flex: 1 }}>
+          <strong>Tramonto</strong>
+          <br />
+          {formatTime(dawnTime)}
+        </div>
+      </div>
+
+      {/* Chart Box */}
+      <div style={{ width: '150px', height: '100px', border: '2px solid #ccc', borderRadius: '5px' }}>
+        <Line data={chartData} options={chartOptions} />
+      </div>
+
+      {/* Label under the graph */}
+      <span style={{ fontSize: '12px', color: '#757575' }}>Andamento della luce</span>
     </div>
   );
 };

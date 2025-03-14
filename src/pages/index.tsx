@@ -13,6 +13,7 @@ import { WeatherCard } from "@/newComponents/Weather";
 import RainRateSpeedometer from "@/newComponents/RainRateSpeedometer";
 import RainBar from "@/newComponents/RainBar";
 import SolarRadiationChart from "@/newComponents/SolarRadiationChart";
+import UVPyramid from "@/newComponents/UVPyramid";
 
 
 
@@ -244,10 +245,9 @@ windGust={parseFloat(wind?.wind_gust.value ?? "0")} />
       rate={parseFloat(rainfall?.rain_rate.value ?? "0")} dailyRain={parseFloat(rainfall?.daily.value ?? "0")} monthlyRain={parseFloat(rainfall?.monthly.value ?? "0")} />
 
       
-      <UVStats uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} />
+      {solarData && <UVStats uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} solarData={solarData} />}
       <AirQuality  aqi={parseFloat(pm25_ch1?.real_time_aqi.value ?? "0")}  pm25={parseFloat(pm25_ch1?.pm25.value ?? "0")}/>
       {/* <TemperatureChart data={temperatureData}/> */}
-      {/* {solarData && <SolarRadiationChart data={solarData.data} />} */}
     </div>
   );
 };
