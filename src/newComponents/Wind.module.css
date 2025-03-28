@@ -1,22 +1,10 @@
-
-
 .weatherContainer {
-
-    border-radius: 24px;
-    background-color: white;
-    box-shadow: 0px 10px 50px 0px rgba(9, 0, 63, 0.25);;
-    display: flex;
-    flex-direction: column;
-    
     min-width: 300px;
     max-width: 700px;
     align-items: center;
-    color: rgba(117, 117, 117, 1);
-    text-align: center;
     letter-spacing: 0.2px;
-    justify-content: center;
+    display: flex;
     flex: 1;
-    padding: 10px 0px 20px;
     gap: 10px;
   }
   
@@ -57,6 +45,7 @@
   .windContainer {
     display: flex;
     align-items: center;
+    height: 100%;
     width: 100%;
     justify-content: space-evenly;
     flex-wrap: wrap;
@@ -75,8 +64,6 @@
     font-size: 18px;
     font-weight: 400;
     line-height: 1.4;
-    text-align: center;
-    align-self: center;
     margin: 0;
   }
   
@@ -99,7 +86,7 @@
 
       @media screen and (min-width: 768px) {
         .weatherContainer {
-          justify-content: space-around;
+          /* justify-content: space-around; */
           min-width: 350px;
         }
         .windContainer {
@@ -132,3 +119,16 @@
       }
 
       
+      @media screen and (max-width: 426px) {
+        .weatherContainer {
+          min-width: 200px;
+        }
+
+        .statContent {
+          margin-top: 4px;
+        }
+        .statIcon{
+          width: 20px;
+        }
+      }
+

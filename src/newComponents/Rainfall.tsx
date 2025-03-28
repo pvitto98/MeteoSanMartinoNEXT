@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Rainfall.module.css";
 import RainRateSpeedometer from "./RainRateSpeedometer";
 import RainBar from "./RainBar";
+import SharedContainer from './SharedContainer';
 
 export interface RainfallProps {
   rate: number;
@@ -11,17 +12,13 @@ export interface RainfallProps {
 
 export const Rainfall: React.FC<RainfallProps> = ({ rate, dailyRain, monthlyRain }) => {
   return (
-    <section className={styles.rainfallContainer} aria-labelledby="rainfall-title">
-      <h2 id="rainfall-title" className={styles.rainfallTitle}>Pioggia</h2>
+    <SharedContainer title="Pioggia" className={styles.rainfallContainer}>
       <div className={styles.metricsContainer}>
-      <RainBar dailyRain={dailyRain} monthlyRain={monthlyRain} />
-
-        {/* Rain rate with speedometer */}
+        <RainBar dailyRain={dailyRain} monthlyRain={monthlyRain} />
         <div className={styles.speedometerContainer}>
           <RainRateSpeedometer rainRate={rate} />
         </div>
-
       </div>
-    </section>
+    </SharedContainer>
   );
 };

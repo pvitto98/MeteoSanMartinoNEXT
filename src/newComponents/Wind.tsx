@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Wind.module.css';
 import WindDirection from '@/newComponents/WindDirection';
+import SharedContainer from './SharedContainer';
 
 export interface WeatherStatProps {
   icon: string;
@@ -36,14 +37,15 @@ const WeatherStat: React.FC<WeatherStatProps> = ({ icon, value, label, unit }) =
         className={styles.statIcon}
         alt={`${label} icon`}
       />
+              <div className={styles.statLabel}>
+          {label}
+        </div>
       <div className={styles.statContent}>
         <div className={styles.statValue}>
           {value}
           <span className={styles.statUnit}>{unit}</span>
         </div>
-        <div className={styles.statLabel}>
-          {label}
-        </div>
+
       </div>
     </div>
   );
@@ -57,12 +59,6 @@ export const WeatherStats: React.FC<WeatherStatsProps> = ({ windSpeed, windDirec
       label: "Vento",
       unit: "Km/h"
     },
-    // {
-    //   icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/19531b8fadc1322a1e7999c30e4e1bc35940cfc4cea03766388250f741e543b4?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794",
-    //   value: `${windDirection}°`, // Format the wind direction
-    //   unit: `${getCardinalDirection(windDirection)}`,
-    //   label: "Dir. Vento"
-    // },
     {
       icon: "./Raffica.svg",
       value: `${windGust}`,
@@ -72,15 +68,13 @@ export const WeatherStats: React.FC<WeatherStatsProps> = ({ windSpeed, windDirec
   ];
 
   return (
-    <section className={styles.weatherContainer} aria-label="Weather Statistics">
-      <h2 id="uv-title" className={styles.uvTitle}>Vento</h2>
+    <SharedContainer title="Vento" className={styles.weatherContainer}>
       <div className={styles.windContainer}>
         <WindDirection
           windSpeed={windSpeed}
           windDirection={windDirection}
           windGust={windGust}
         />
-        {/* Grouping wind speed and direction values */}
         <div className={styles.windValues} role="list">
           {weatherStats.map((stat, index) => (
             <WeatherStat
@@ -92,9 +86,7 @@ export const WeatherStats: React.FC<WeatherStatsProps> = ({ windSpeed, windDirec
             />
           ))}
         </div>
-
       </div>
-
-    </section>
+    </SharedContainer>
   );
 };

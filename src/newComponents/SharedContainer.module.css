@@ -1,0 +1,69 @@
+.sharedContainer {
+    border-radius: 24px;
+    background-color: white;
+    box-shadow: 0px 10px 20px 0px rgba(9, 0, 63, 0.25);
+    display: flex;
+    flex-direction: column;
+    color: rgba(117, 117, 117, 1);
+    letter-spacing: 0.2px;
+    justify-content: flex-start;
+    flex: 1;
+    flex-basis: 0%;
+    max-width: 700px;
+    padding: 15px 20px 20px 20px;
+    min-width: 300px;
+    gap: 15px;
+    opacity: 0; /* Start hidden for animation */
+    animation: fadeInUp 0.6s ease-in-out forwards;
+  }
+  
+  /* New header container for the title and separator */
+  .header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .rainfallTitle {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: left;
+    margin: 0px;
+    align-self: baseline;
+  }
+  
+  /* Separator styling placed in the same container as the title */
+  .separator {
+    border: none;
+    height: 1px;
+    width: 100%;
+    background-color: #e0e0e0;
+    margin: 5px 0px 0px 0px;  }
+  
+  /* Fade in and slide up animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media screen and (min-width: 768px) {
+    .sharedContainer {
+      gap: 15px;
+      min-height: 150px;
+    }
+  }
+
+  @media screen and (max-width: 426px) {
+    .sharedContainer {
+        min-width: 250px;
+      }
+}
+
+  

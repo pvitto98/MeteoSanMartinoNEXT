@@ -14,6 +14,7 @@ import RainRateSpeedometer from "@/newComponents/RainRateSpeedometer";
 import RainBar from "@/newComponents/RainBar";
 import SolarRadiationChart from "@/newComponents/SolarRadiationChart";
 import UVPyramid from "@/newComponents/UVPyramid";
+import AirQualityDisplay from "@/newComponents/AirQualityDisplay";
 
 
 

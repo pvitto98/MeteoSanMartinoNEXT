@@ -9,7 +9,7 @@ const RainRateSpeedometer = ({ rainRate }: RainRateSpeedometerProps) => {
   const clampedRate = Math.min(rainRate, 60); // Limit the needle position
 
   const getRainLabel = (rate: number) => {
-    if (rate === 0) return "Pioggia Assente";
+    if (rate === 0) return "";
     if (rate < 2) return "Pioviggine";
     if (rate < 5) return "Pioggia Debole";
     if (rate < 15) return "Pioggia Moderata";

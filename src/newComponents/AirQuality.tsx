@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './AirQuality.module.css';
+import AirQualityDisplay from './AirQualityDisplay';
+import SharedContainer from './SharedContainer';
 
 export interface AirQualityMetricProps {
   icon: string;
@@ -71,10 +73,7 @@ export const AirQuality: React.FC<AirQualityProps> = ({ aqi, pm25 }) => {
   ];
 
   return (
-    <section className={styles.airQuality} aria-labelledby="air-quality-title">
-      <h2 id="air-quality-title" className={styles.title}>
-        Qualità aria
-      </h2>
+    <SharedContainer title="Qualità aria" className={styles.airQuality}>
       <div className={styles.metricsContainer}>
         {metrics.map((metric, index) => (
           <AirQualityMetric
@@ -86,6 +85,6 @@ export const AirQuality: React.FC<AirQualityProps> = ({ aqi, pm25 }) => {
           />
         ))}
       </div>
-    </section>
+    </SharedContainer>
   );
 };
