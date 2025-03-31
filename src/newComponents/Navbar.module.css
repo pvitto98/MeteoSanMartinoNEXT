@@ -3,23 +3,28 @@
     align-items: center;
     letter-spacing: 0.2px;
     justify-content: space-between;
-
     position: fixed;
     z-index: 100;
     width: 100%;
     max-width: 700px;
     align-self: center;
     padding: 15px 10px 10px 10px;
-    background-color: rgba(242, 251, 255, 0.5); /* 50% transparency */
-    backdrop-filter: blur(10px); /* Add blur effect */
-    transition: box-shadow 0.3s ease; /* Add transition for smooth shadow effect */
-}
-
-.navbar.scrolled {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a softer shadow with a slight blur */
-}
-
-.header {
+    background-color: rgba(242, 251, 255, 0.5); /* original: 50% transparent */
+    backdrop-filter: blur(10px); /* original blur */
+    transition: box-shadow 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease;
+  }
+  
+  .navbar.scrolled {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* New styles when the weather card is expanded */
+  .expandedNav {
+    background-color: unset; /* new solid background */
+    backdrop-filter: none;      /* remove blur */
+  }
+  
+  .header {
     align-self: stretch;
     display: flex;
     min-width: 240px;
@@ -28,23 +33,40 @@
     flex: 1 0 0;
     margin: auto 0;
     margin-left: 20px;
-}
-
-.category {
+  }
+  
+  .category {
     color: var(--neutrals-background-neturals-neutral-color-700, #757575);
     font-size: 12px;
     font-weight: 300;
-}
-
-.locationName {
+    transition: color 0.3s ease, font-size 0.3s ease;
+  }
+  
+  .locationName {
     color: rgba(97, 97, 97, 1);
     font-size: 18px;
     font-weight: 500;
     z-index: 10;
     margin: 0;
-}
+    transition: color 0.3s ease, font-size 0.3s ease;
+  }
+  
+  /* Override text styles when navbar is in expanded mode */
+  .expandedNav .category {
+    color: white;
+    font-size: 12px;
+    margin-left: 15px; /* Add left margin */
 
-.locationImage {
+  }
+  
+  .expandedNav .locationName {
+    color: white;
+    font-size: 14px;
+    margin-left: 15px; /* Add left margin */
+
+  }
+  
+  .locationImage {
     aspect-ratio: 1;
     object-fit: contain;
     object-position: center;
@@ -52,26 +74,37 @@
     border-radius: 50%;
     align-self: stretch;
     margin: auto 0;
-}
-
-.icsharpMenu {
+  }
+  
+  .icsharpMenu {
     background: transparent;
     border-style: hidden;
     margin-right: 20px;
-}
-
-@media screen and (min-width: 768px) {
+  }
+  
+  .menuIcon {
+    width: 35px;
+    height: 35px;
+    color: #757575; /* Default color */
+    transition: color 0.3s ease;
+  }
+  
+  .expandedNav .menuIcon {
+    color: white; /* Color when expanded */
+  }
+  
+  @media screen and (min-width: 768px) {
     .category {
-        font-size: 14px;
+      font-size: 14px;
     }
     .locationName {
-        font-size: 24px;
+      font-size: 24px;
     }
     .locationImage {
-        width: 40px;
+      width: 40px;
     }
     .navbar {
-        max-width: 1020px;
-        padding: 25px 20px;
+      max-width: 1020px;
+      padding: 25px 20px;
     }
-}
+  }

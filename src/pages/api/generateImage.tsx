@@ -50,11 +50,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // // // Extract temperature, pressure, rain, etc., from the data
     const temperatures = Object.values(weatherData.data.data.outdoor.temperature.list).map(Number);
     const pressures = Object.values(weatherData.data.data.pressure.relative.list).map(Number);
-    const rainEvents = Object.values(weatherData.data.data.rainfall.event.list).map(Number);
+    const rainEvents = Object.values(weatherData.data.data.rainfall.daily.list).map(Number);
     const rainRates = Object.values(weatherData.data.data.rainfall.rain_rate.list).map(Number);
     const windGustValues = Object.values(weatherData.data.data.wind.wind_gust.list).map(Number);
     const pm25 = Object.values(weatherData.data.data.pm25_ch1.pm25.list).map(Number);
 
+    console.log(weatherData.data.data.rainfall.daily.list);
     // Calculate the average values
     const tempMax = Math.max(...temperatures).toFixed(1);
     const tempMin = Math.min(...temperatures).toFixed(1);
@@ -64,6 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const rainRate = calculateAverage(rainRates).toFixed(1);
     const pm25avg = calculateAverage(pm25).toFixed(1);
 
+  
     const totalRain = Math.max(...rainEvents).toFixed(1)
     const windGustMax = Math.max(...windGustValues).toFixed(1);
 

@@ -10,14 +10,7 @@ import { WeatherStats } from "@/newComponents/Wind";
 import { UVStats } from "@/newComponents/UV";
 import { AirQuality } from "@/newComponents/AirQuality";
 import { WeatherCard } from "@/newComponents/Weather";
-import RainRateSpeedometer from "@/newComponents/RainRateSpeedometer";
-import RainBar from "@/newComponents/RainBar";
-import SolarRadiationChart from "@/newComponents/SolarRadiationChart";
-import UVPyramid from "@/newComponents/UVPyramid";
-import AirQualityDisplay from "@/newComponents/AirQualityDisplay";
-
-
-
+import useScrollExpanded from '@/hooks/useScrollExpanded';
 
 interface TimedValue {
   time: string;
@@ -124,7 +117,8 @@ const Dashboard = () => {
     1741850100: '77.2',
   };
 
-  
+  const isCardExpanded = useScrollExpanded(20); // Use the custom hook
+
   // const router = useRouter();
 
   // Function to convert the object to an array of {date, value}
@@ -163,7 +157,6 @@ function transformData(data: DeviceData): DateValue[] {
 
     fetchTemperatureData();
   }, []);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -236,8 +229,8 @@ function transformData(data: DeviceData): DateValue[] {
   const uvRisk = determineUVRisk(parseFloat(solar_and_uvi?.uvi.value ?? "0"));
 
   return (
-    <div className={styles.weatherContent}>
-      <WeatherCard temperature={parseFloat(outdoor?.temperature.value ?? "0")} perceivedTemperature={parseFloat(outdoor?.feels_like.value ?? "0")} dewPoint={parseFloat(outdoor?.dew_point.value ?? "0")} humidity={parseFloat(outdoor?.humidity.value ?? "0")} pressure={parseFloat(pressure?.relative.value ?? "0")} rainRate={parseFloat(rainfall?.rain_rate.value ?? "0")} lightningCount={parseFloat(lightning?.count.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} />
+<div className={`${styles.weatherContent} ${isCardExpanded ? styles.expandedContent : styles.collapsedContent}`}>
+<WeatherCard temperature={parseFloat(outdoor?.temperature.value ?? "0")} perceivedTemperature={parseFloat(outdoor?.feels_like.value ?? "0")} dewPoint={parseFloat(outdoor?.dew_point.value ?? "0")} humidity={parseFloat(outdoor?.humidity.value ?? "0")} pressure={parseFloat(pressure?.relative.value ?? "0")} rainRate={parseFloat(rainfall?.rain_rate.value ?? "0")} lightningCount={parseFloat(lightning?.count.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} />
       <WeatherStats 
       windSpeed={parseFloat(wind?.wind_speed.value ?? "0")}
 windDirection={parseFloat(wind?.wind_direction.value ?? "0")}
@@ -248,7 +241,6 @@ windGust={parseFloat(wind?.wind_gust.value ?? "0")} />
       
       {solarData && <UVStats uvIndex={parseFloat(solar_and_uvi?.uvi.value ?? "0")} uvSolar={parseFloat(solar_and_uvi?.solar.value ?? "0")} solarData={solarData} />}
       <AirQuality  aqi={parseFloat(pm25_ch1?.real_time_aqi.value ?? "0")}  pm25={parseFloat(pm25_ch1?.pm25.value ?? "0")}/>
-      {/* <TemperatureChart data={temperatureData}/> */}
     </div>
   );
 };

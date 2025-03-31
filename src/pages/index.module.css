@@ -42,6 +42,22 @@
   margin-top: 75px;
 }
 
+@media screen and (max-width: 768px) {
+  .expandedContent {
+    margin-top: calc(var(--weather-card-height, 280px) + 90px); /* Dynamically calculate margin-top */
+  }
+  .collapsedContent {
+    margin-top: 170px;
+  }
+
+  /* If necessary, also adjust gap or other spacing */
+  .weatherContent {
+    gap: 10px;
+  }
+}
+
+
+
 
 @media screen and (min-width: 768px) {
 

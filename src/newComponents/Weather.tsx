@@ -41,12 +41,9 @@ const WeatherValue: React.FC<{ label: string; value: string }> = ({
         <span className={styles.unit}>{unit}</span>
       </div>
       <div className={styles.label}>{label}</div>
-
     </div>
   );
 };
-
-
 
 export const WeatherCard: React.FC<TemperatureType> = ({
   temperature,
@@ -56,14 +53,24 @@ export const WeatherCard: React.FC<TemperatureType> = ({
   pressure,
   rainRate,
   lightningCount,
-  uvSolar
+  uvSolar,
 }) => {
   const [animate, setAnimate] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   useEffect(() => {
-    // Trigger animation after a short delay to ensure component is mounted
-    const timer = setTimeout(() => setAnimate(true), 100);
-    return () => clearTimeout(timer);
+    const handleScroll = () => {
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      if (!isMobile) {
+        setExpanded(false); // Always collapsed on desktop
+        return;
+      }
+      setExpanded(window.scrollY < 20); // Expanded only when scrolled less than 20px
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const { icon: weatherIcon, condition } = getWeatherIcon(
@@ -73,16 +80,22 @@ export const WeatherCard: React.FC<TemperatureType> = ({
     ""
   );
 
-  console.log(lightningCount);
   return (
     <section
-      className={`${styles.temperature} ${uvSolar === 0 ? styles.nightMode : ''}`}
+      className={`
+        ${styles.temperature} 
+        ${uvSolar === 0 ? styles.nightMode : ''} 
+        ${expanded ? styles.expanded : styles.collapsed}
+      `}
       aria-label="Weather information"
     >
+      {expanded && <div className={styles.glassLayer}></div>}
       <div className={styles.mainContent}>
         <div className={styles.infoContainer}>
           <div className={styles.dateContainer}>
-            <div className={styles.date}>{new Date().toLocaleDateString('it-IT')}</div>
+            <div className={styles.date}>
+              {new Date().toLocaleDateString('it-IT')}
+            </div>
             <div className={styles.condition}>{condition}</div>
           </div>
           <div className={styles.temperatureValue}>
@@ -105,14 +118,23 @@ export const WeatherCard: React.FC<TemperatureType> = ({
           { label: 'Dew Point', value: `${dewPoint}°C` },
           { label: 'Umidità', value: `${humidity}%` },
           { label: 'Pressione', value: `${pressure} hPa` },
-        ].map((item, index) => (
-          <WeatherValue key={index} label={item.label} value={item.value} />
-        ))}
+        ].map((item, index) => {
+          const [numericValue, unit] = item.value.split(/([^\d.,]+)/); // Split value into number and unit
+          return (
+            <div key={index} className={styles.pill}>
+              <div>
+                <div className={styles.value}>
+                  {numericValue}
+                  <span className={styles.unit}>{unit}</span>
+                </div>
+                <div className={styles.label}>{item.label}</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
 };
-
-
 
 export default WeatherCardContainer;

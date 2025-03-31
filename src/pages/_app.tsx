@@ -33,13 +33,15 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
+  // Pass query parameters as props
+  const combinedProps = { ...pageProps, query: router.query };
+
   return (
     <div className={`${styles.weatherPage} ${rubik.className}`}>
       <Head>
         <title>San Martino Weather</title>
         {/* <link rel="icon" href="/favicon.ico" /> */}
         <link rel="manifest" href="/manifest.json" />
-
       </Head>
       {/* Load the Google Analytics script */}
       <Script
@@ -67,7 +69,7 @@ export default function App({ Component, pageProps }: AppProps) {
         imageUrl="https://cdn.builder.io/api/v1/image/assets/TEMP/613fc0f38cc1a9c6d440dc25d81e8baf0e4433215d6c5283a7e7f2b29814e45a?placeholderIfAbsent=true&apiKey=e62f62da33e24992bb1b86d3f077b794"
       />
 
-      <Component {...pageProps} />
+      <Component {...combinedProps} />
       <ConsentBanner />
     </div>
   );
