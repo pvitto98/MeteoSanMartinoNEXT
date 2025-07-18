@@ -8,12 +8,12 @@ export default function ConsentBanner() {
       .find((row) => row.startsWith('analytics-consent='))
       ?.split('=')[1];
 
-    if (analyticsConsent === 'true') {
+    // if (analyticsConsent === 'true') {
       import('react-ga4').then((ReactGA) => {
         ReactGA.default.initialize('G-ZT70ELG7BQ');
         ReactGA.default.send('pageview');
       });
-    }
+    // }
   }, []);
 
   const handleConsent = (accepted: boolean) => {
