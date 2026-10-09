@@ -1,10 +1,233 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #f2fbff;
+/* Registered so the sky can cross-fade smoothly when it changes. */
+@property --sky-top {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #24345e;
+}
+@property --sky-bottom {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4a6189;
 }
 
-#root {
-  height: 100%;
+:root {
+  transition: --sky-top 2.5s ease, --sky-bottom 2.5s ease;
+
+  /* Sky — overwritten live by <SkyBackground /> */
+  --sky-top: #24345e;
+  --sky-bottom: #4a6189;
+  --sky-glow: #fff2c4;
+  --daylight: 1;
+
+  /* Cards: a dark tinted glass that keeps text readable on bright or grey skies */
+  --card: rgba(8, 17, 42, 0.36);
+  --card-hover: rgba(8, 17, 42, 0.46);
+  --card-border: rgba(255, 255, 255, 0.14);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  /* Glass surfaces */
+  --glass: rgba(255, 255, 255, 0.12);
+  --glass-strong: rgba(255, 255, 255, 0.18);
+  --glass-deep: rgba(8, 14, 34, 0.28);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-shadow: 0 12px 32px -12px rgba(3, 8, 28, 0.35);
+  --blur: blur(22px) saturate(140%);
+
+  /* Text on sky */
+  --text: #ffffff;
+  --text-2: rgba(255, 255, 255, 0.84);
+  --text-3: rgba(255, 255, 255, 0.66);
+  --hairline: rgba(255, 255, 255, 0.14);
+
+  /* Accents */
+  --accent: #ffd36b;
+  --rain: #6cc4ff;
+  --good: #4ade80;
+  --warn: #fb923c;
+  --bad: #ef4444;
+
+  --radius-xl: 32px;
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+
+  --gutter: 16px;
+  --content-max: 560px;
+  --topbar-h: 56px;
+  --tabbar-h: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--sky-top);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  color: var(--text);
+  background: var(--sky-bottom);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Scrollers that bleed to the screen edge on mobile */
+.h-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.h-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Staggered entrance for cards */
+.reveal {
+  animation: fade-up 0.7s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 25%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0.06) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Page frame shared by every route */
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 4px var(--gutter) calc(var(--tabbar-h) + 36px + var(--safe-bottom));
+  animation: fade-up 0.5s var(--ease-out) both;
+}
+
+.page-wide {
+  --content-max: 1080px;
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --content-max: 1120px;
+    --gutter: 28px;
+  }
+
+  .page {
+    padding-top: 12px;
+    padding-bottom: 56px;
+  }
+}
+
+/* Desktop page grids: one column on phones, several on large screens */
+.desktop-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 1100px) {
+  .desktop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .desktop-grid > .span-all {
+    grid-column: 1 / -1;
+  }
 }

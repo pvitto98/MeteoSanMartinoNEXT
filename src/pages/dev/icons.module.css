@@ -1,0 +1,56 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: var(--glass);
+}
+
+.hero {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  overflow: visible;
+}
+
+.hero img {
+  width: 120px;
+  height: 120px;
+}
+
+.row {
+  display: flex;
+  gap: 6px;
+}
+
+/* Outline shows the box each icon has to fit in */
+.slot {
+  display: grid;
+  place-items: center;
+  outline: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+.cell code {
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.moons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.note {
+  font-size: 12px;
+  color: var(--text-3);
+}

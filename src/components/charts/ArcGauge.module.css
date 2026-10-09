@@ -1,0 +1,34 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: 160px;
+  margin: 0 auto;
+}
+
+.svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.band {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  opacity: 0.9;
+}
+
+.marker {
+  fill: #fff;
+  stroke: rgba(0, 0, 0, 0.25);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  transition: cx 1.2s var(--ease-out), cy 1.2s var(--ease-out);
+}
+
+.center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}

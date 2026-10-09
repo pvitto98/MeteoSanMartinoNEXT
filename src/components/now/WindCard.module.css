@@ -1,0 +1,111 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.rose {
+  width: 100%;
+  max-width: 190px;
+  overflow: visible;
+}
+
+.ring {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: var(--hairline);
+}
+
+.tick {
+  stroke: rgba(255, 255, 255, 0.22);
+}
+
+.tickMajor {
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 1.6;
+}
+
+.letter {
+  fill: var(--text-2);
+  font-size: 11px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.trail {
+  fill: var(--accent);
+}
+
+.needle {
+  transform-origin: 80px 80px;
+  transition: transform 1.4s var(--ease-spring);
+}
+
+.needle .head {
+  fill: #fff;
+  animation: wobble 2.2s ease-in-out infinite;
+  transform-origin: 80px 80px;
+}
+
+.shaft {
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+
+.tail {
+  fill: rgba(255, 255, 255, 0.7);
+}
+
+.hub {
+  fill: color-mix(in srgb, var(--sky-top) 70%, black 10%);
+  stroke: var(--glass-border);
+}
+
+.speed {
+  fill: #fff;
+  font-size: 22px;
+  font-weight: 500;
+  text-anchor: middle;
+}
+
+.unit {
+  fill: var(--text-3);
+  font-size: 9px;
+  text-anchor: middle;
+}
+
+.stats {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.stats dt {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+
+.stats dd {
+  margin: 0;
+}
+
+.name dd {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.small {
+  font-size: 15px;
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(calc(var(--wobble) * -0.5));
+  }
+  50% {
+    transform: rotate(calc(var(--wobble) * 0.5));
+  }
+}

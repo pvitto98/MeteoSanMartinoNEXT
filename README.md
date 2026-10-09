@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Meteo San Martino delle Scale
 
-## Getting Started
+Live weather from the Ecowitt station in San Martino delle Scale (Monreale, PA): an installable, mobile-first PWA built with Next.js (Pages Router).
 
-First, run the development server:
+- **Ora**: live readings over a sky that follows the real sun position and the measured cloudiness; today's temperature chart (measured + forecast), wind rose, rain gauge, sun path, UV, air quality, pressure trend, lightning.
+- **Previsioni**: hour-by-hour and 7-day forecast from Open-Meteo, rain outlook, and station-vs-model comparison.
+- **Storico**: daily archive by month or year: temperature bands, rain, calendar/heatmap, and per-day details.
+- **Record**: all-time extremes, dry/wet spells, the same day in previous years, and year-by-year totals.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Used for |
+| --- | --- |
+| `ECOWITT_APPLICATION_KEY`, `ECOWITT_API_KEY` | Live station data |
+| `DATABASE_URL` | MongoDB archive (Prisma) |
+| `WUNDER_API_KEY` | Daily archiving job (`/api/device/daily_measuration`) |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics (comma-separated IDs allowed), loaded **only after consent**. Cookieless visit counts come from Vercel Web Analytics (enable it in the Vercel dashboard). |
+| `ARCHIVE_SECRET` | Optional: when set, archive requests for a specific `?date=` need `Authorization: Bearer <secret>`. The plain daily call stays open for the cron job. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL for meta tags |
+| `DEV_UPSTREAM_URL` | Local dev only: without the secrets above, proxy station data and archive through a deployed instance (e.g. `https://meteo-san-martino-next.vercel.app`) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How it works
 
-## Learn More
+- `src/lib/server/*` normalises Ecowitt payloads to metric numbers, wraps Open-Meteo and the Prisma archive. API routes send `s-maxage` headers, so all visitors share one upstream call per window.
+- `src/lib/sky.ts` derives the sky condition from the station itself: lightning → rain gauge → fog → **clear-sky index** (pyranometer reading ÷ Haurwitz clear-sky irradiance) by day → Open-Meteo cloud cover by night. It also builds the live sky palette from the sun altitude.
+- `src/lib/hooks.ts` holds the SWR data hooks; components live in `src/components/{sky,now,forecast,history,ui,layout,pwa}`. Charts are hand-written SVG, with no chart library.
+- PWA: `public/manifest.json` (maskable icons, shortcuts) and `public/sw.js` (network-first data with offline fallback, cache-first static assets). The install sheet (`src/components/pwa`) uses the native prompt on Chromium and illustrated steps on iOS and in in-app browsers. It runs after the privacy choice and snoozes for 7 days, at most twice.
+- Weather icons are [Meteocons](https://github.com/basmilius/weather-icons) by Bas Milius (MIT, licence in `public/icons/weather/`): animated in the hero, static in lists. Preview them all in dev at `/dev/icons`, and force any condition app-wide with `?forza=<kind>` (dev only).
+- The app icon source is `assets/brand/app-icon.svg`.
+- `assets/social/` holds server-only files for the daily share image (`/api/generateImage`).
 
-To learn more about Next.js, take a look at the following resources:
+## Daily archive
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`vercel.json` runs `/api/device/daily_measuration` every night. It archives any day missing from the last week, so a missed run heals itself. It never writes a day twice, and it never writes a day without Weather Underground data. Add `?date=YYYYMMDD` for one day, and `&dryRun=1` to preview without writing.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To fill a longer gap, preview it first, then write it:
 
-## Deploy on Vercel
+```bash
+node scripts/backfill-archive.mjs --base https://meteo-san-martino-next.vercel.app --from 20250703 --to 20251019
+node scripts/backfill-archive.mjs --base https://meteo-san-martino-next.vercel.app --from 20250703 --to 20251019 --write
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Write mode previews each day again and skips anything suspicious (rerun those days with `--force` after checking them).

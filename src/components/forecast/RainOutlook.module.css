@@ -1,0 +1,32 @@
+.summary {
+  font-size: 14.5px;
+  margin-bottom: 12px;
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 80px;
+  padding-bottom: 1px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.bar {
+  flex: 1;
+  border-radius: 3px 3px 1px 1px;
+  background: linear-gradient(180deg, #9bd8ff, #3b82f6);
+  transition: height 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.midnight {
+  box-shadow: -2px 0 0 -1px rgba(255, 255, 255, 0.35);
+}
+
+.axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-3);
+}

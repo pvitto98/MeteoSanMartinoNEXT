@@ -1,0 +1,93 @@
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+}
+
+.glow {
+  position: absolute;
+  width: 140vmax;
+  height: 140vmax;
+  translate: -50% -50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--sky-glow) 70%, transparent) 0%, transparent 38%);
+  transition: left 3s ease, top 3s ease, opacity 3s ease;
+  mix-blend-mode: soft-light;
+}
+
+.clouds {
+  position: absolute;
+  inset: 0;
+  transition: opacity 3s ease;
+}
+
+.clouds span {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 70%);
+  filter: blur(18px);
+  animation: drift 90s linear infinite;
+}
+
+.c1 {
+  width: 120vw;
+  height: 34vh;
+  top: 4%;
+  left: -40%;
+}
+.c2 {
+  width: 90vw;
+  height: 26vh;
+  top: 26%;
+  left: 30%;
+  animation-duration: 120s !important;
+  animation-delay: -40s !important;
+}
+.c3 {
+  width: 140vw;
+  height: 30vh;
+  top: 52%;
+  left: -60%;
+  animation-duration: 150s !important;
+  animation-delay: -80s !important;
+}
+.c4 {
+  width: 80vw;
+  height: 22vh;
+  top: 72%;
+  left: 10%;
+  animation-duration: 105s !important;
+  animation-delay: -20s !important;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-25vw);
+  }
+  50% {
+    transform: translateX(25vw);
+  }
+  to {
+    transform: translateX(-25vw);
+  }
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(4, 10, 30, 0.22) 100%);
+}

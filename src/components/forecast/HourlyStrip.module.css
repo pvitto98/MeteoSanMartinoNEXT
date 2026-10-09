@@ -1,0 +1,53 @@
+.scroller {
+  margin: 0 -16px;
+  padding: 0 8px;
+  mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+}
+
+.track {
+  position: relative;
+  flex: none;
+}
+
+.curve {
+  display: block;
+  overflow: visible;
+}
+
+.temp {
+  fill: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  text-anchor: middle;
+}
+
+.cols {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-top: 2px;
+  scroll-snap-align: start;
+}
+
+.midnight {
+  border-left: 1px dashed var(--hairline);
+}
+
+.pop {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rain);
+}
+
+.hour {
+  font-size: 12px;
+  color: var(--text-2);
+}

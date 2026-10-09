@@ -1,74 +1,88 @@
-/* .stazioneMeteoSan {
-  margin: 0;
-  position: relative;
-  font-size: inherit;
-  font-weight: 700;
-  font-family: inherit;
-  white-space: nowrap;
-  color: #ffffff;
-  text-wrap: balance;
-} */
-
-.weatherApp {
-  align-self: stretch;
-  border-radius: var(--br-6xl);
-  background-color: var(--color-gray-200);
+.home {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.footer {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
   align-items: flex-start;
-  justify-content: center;
-  padding: var(--padding-xl);
-  top: 0;
-  z-index: 99;
-  position: sticky;
-  text-align: center;
-  font-size: var(--font-size-31xl);
-  color: var(--color-white);
-  font-family: var(--font-helvetica-rounded);
-  gap: 40px;
-
+  padding: 8px 4px 0;
+  font-size: 12px;
+  color: var(--text-3);
 }
 
-.weatherContent {
-  display: flex;
-  margin-top: 50px;
-  width: 100%;
-  justify-content: center;
-  flex-direction: row;
-  gap: 20px;
-  flex-wrap: wrap;
-  align-self: center;
-  max-width: 1100px;
-  margin-top: 75px;
+.footer svg {
+  flex: none;
+  margin-top: 1px;
 }
 
-@media screen and (max-width: 768px) {
-  .expandedContent {
-    margin-top: calc(var(--weather-card-height, 280px) + 90px); /* Dynamically calculate margin-top */
-  }
-  .collapsedContent {
-    margin-top: 170px;
+/* The dashboard (and the top bar above it) uses the full width on large screens. */
+:global(html):has(.home) {
+  --content-max: 1120px;
+}
+
+@media (min-width: 960px) {
+  .home {
+    display: grid;
+    grid-template-columns: minmax(360px, 420px) minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
   }
 
-  /* If necessary, also adjust gap or other spacing */
-  .weatherContent {
-    gap: 10px;
+  /* The current conditions fill the window height and stay in view while the dashboard scrolls. */
+  .heroCol {
+    position: sticky;
+    top: calc(var(--topbar-h) + 20px);
+    display: flex;
+    height: calc(100dvh - var(--topbar-h) - 44px);
+    min-height: 560px;
+    max-height: 860px;
+    padding: 28px;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--card-border);
+    box-shadow: var(--glass-shadow), var(--card-highlight);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+  }
+
+  .heroCol > * {
+    flex: 1;
+  }
+
+  .grid {
+    gap: 16px;
   }
 }
 
-
-
-
-@media screen and (min-width: 768px) {
-
-  .weatherContent {
-    margin-top: 100px;
-  }
+.desktopOnly {
+  display: none;
 }
 
-@media screen and (max-width: 768px) {
+.stationText {
+  font-size: 14px;
+  color: var(--text-2);
+}
 
-  .weatherContent {
-    gap: 10px;
+@media (min-width: 1100px) {
+  .desktopOnly {
+    display: flex;
   }
 }

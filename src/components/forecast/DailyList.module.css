@@ -1,0 +1,112 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item + .item {
+  border-top: 1px solid var(--hairline);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 64px 50px 34px 1fr 34px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 0;
+  text-align: left;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.day small {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rain);
+  line-height: 1;
+}
+
+.min {
+  text-align: right;
+  color: var(--text-2);
+  font-size: 16px;
+}
+
+.max {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.track {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 3px;
+  min-width: 6px;
+}
+
+.now {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin: 0 0 12px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--glass-deep);
+  animation: fade-in 0.3s ease both;
+}
+
+.details dt {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+.details dd {
+  margin: 0;
+  font-size: 14px;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

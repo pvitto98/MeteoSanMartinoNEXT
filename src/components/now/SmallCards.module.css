@@ -1,0 +1,100 @@
+.level {
+  margin-top: -2px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hint {
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--text-3);
+}
+
+.trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+
+.humidity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ringBg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 6;
+}
+
+.ring {
+  fill: none;
+  stroke: var(--rain);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.4s var(--ease-out);
+}
+
+.stormy {
+  box-shadow: var(--glass-shadow), 0 0 0 1px rgba(255, 211, 77, 0.45), 0 0 40px -6px rgba(255, 211, 77, 0.45);
+}
+
+.lightning {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.radar {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 211, 77, 0.15), transparent 70%);
+}
+
+.radar span {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.radar span:nth-child(2) {
+  inset: 16px;
+}
+.radar span:nth-child(3) {
+  inset: 32px;
+}
+
+.radar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(255, 211, 77, 0.45), transparent 25%);
+  animation: sweep 3s linear infinite;
+}
+
+.radar i {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - var(--d) * 48px);
+  width: 8px;
+  height: 8px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -14,7 +14,7 @@ const processFile = async () => {
     // }
 
     // Path to the JSON data
-    const filePath = path.join(process.cwd(), 'public', 'data.json'); // Modify as needed
+    const filePath = path.join(process.cwd(), 'prisma', 'data.json'); // Modify as needed
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
     // Map and insert data

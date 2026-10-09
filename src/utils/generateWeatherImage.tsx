@@ -2,7 +2,7 @@ import { createCanvas, loadImage, registerFont } from 'canvas';
 import path from 'path';
 
 // Registra il font Rubik (assicurati che Rubik-Regular.ttf sia nella cartella public/fonts/)
-registerFont(path.join(process.cwd(), 'public', 'fonts', 'Rubik-Regular.ttf'), { family: 'Rubik' });
+registerFont(path.join(process.cwd(), 'assets', 'social', 'fonts', 'Rubik-Regular.ttf'), { family: 'Rubik' });
 
 const baseFontSize = 22; // Define the smallest font size
 
@@ -47,7 +47,7 @@ export async function generateWeatherImage3({
   const ctx = canvas.getContext('2d');
 
   // Load background image
-  const bgPath = path.join(process.cwd(), 'public', 'background.jpg');
+  const bgPath = path.join(process.cwd(), 'assets', 'social', 'background.jpg');
   const background = await loadImage(bgPath);
   ctx.drawImage(background, 0, 0, width, height);
 
@@ -73,7 +73,7 @@ export async function generateWeatherImage3({
   // Weather icon (optional)
   if (imgFileName) {
     try {
-      const imagePath = path.join(process.cwd(), 'public', imgFileName);
+      const imagePath = path.join(process.cwd(), 'assets', 'social', imgFileName);
       const image = await loadImage(imagePath);
       // ctx.drawImage(image, containerX + 10, containerY + 10, 100, 100);
     } catch (err) {
@@ -134,7 +134,7 @@ export async function generateWeatherImage3({
   const x = 600;
   const y = 220;
   for (let i = 0; i < values.length; i++) {
-    const iconPath = path.join(process.cwd(), 'public', icons[i]);
+    const iconPath = path.join(process.cwd(), 'assets', 'social', icons[i]);
     try {
       const icon = await loadImage(iconPath);
       ctx.drawImage(icon, containerX + x + 40 + i * measurementWidth, containerY + y - 75, 40, 40);

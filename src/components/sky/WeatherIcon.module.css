@@ -1,0 +1,8 @@
+.icon {
+  display: block;
+  flex: none;
+  /* The artwork leaves ~15% padding inside its 64×64 box: scale it up so it fills the slot. */
+  transform: scale(1.18);
+  filter: drop-shadow(0 6px 12px rgba(0, 10, 40, 0.28));
+  user-select: none;
+}

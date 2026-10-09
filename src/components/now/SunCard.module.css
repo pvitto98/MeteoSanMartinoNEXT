@@ -1,0 +1,93 @@
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.horizon {
+  stroke: var(--hairline);
+}
+
+.path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 2;
+  stroke-dasharray: 2 5;
+  stroke-linecap: round;
+}
+
+.done {
+  fill: none;
+  stroke: url(#sunpath);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.sun {
+  filter: drop-shadow(0 0 10px rgba(255, 211, 77, 0.9));
+  animation: glow 3s ease-in-out infinite;
+}
+
+.night {
+  fill: var(--text-2);
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -6px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.times span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.light {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+}
+
+.lightHead {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #9aa7bd, #ffe28a);
+  transition: width 1.2s var(--ease-out);
+}
+
+.caption {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+}

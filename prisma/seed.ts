@@ -5,7 +5,7 @@ import path from 'path';
 const prisma = new PrismaClient();
 
 // Absolute path to the JSON file in the public directory
-const filePath = path.join(__dirname, 'public', 'data.json'); // Adjust according to your project structure
+const filePath = path.join(__dirname, 'data.json'); // Adjust according to your project structure
 
 const processFile = async () => {
   try {
